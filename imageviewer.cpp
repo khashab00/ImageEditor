@@ -1,6 +1,10 @@
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
-
+#include "Settings.h"
+namespace
+{
+    const QString UNTITLED_TAB_NAME = QObject::tr("Untitled");
+}
 ImageViewer::ImageViewer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ImageViewer)
@@ -25,8 +29,8 @@ ImageViewer::ImageViewer(QWidget *parent)
     setAcceptDrops(true);
     setWindowTitle(tr("Image Editor"));
 
-   resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
-
+    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    createKeyboardShortcuts();
 }
 
 bool ImageViewer::loadFile(const QString &fileName)
@@ -149,7 +153,7 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
 
 void ImageViewer::setImage(const QImage &newImage)
 {
-    image = newImage;
+    this->image = newImage;
     imageLabel->setPixmap(QPixmap::fromImage(image));
     scaleFactor = 1.0;
 
@@ -278,6 +282,42 @@ void ImageViewer::on_action_Paste_triggered()
 #endif // !QT_NO_CLIPBOARD
 }
 
+
+void ImageViewer::createKeyboardShortcuts()
+{
+    //File Menu
+    ui->action_Exit->setShortcut(QString("f4"));
+   /* ui->actionNew->setShortcut(QString("Ctrl+N"));
+    ui->actionOpen->setShortcut(QString("Ctrl+O"));
+    ui->actionSave->setShortcut(QString("Ctrl+S"));
+    ui->actionSave_As->setShortcut(QString("Ctrl+Shift+S"));
+    ui->actionPrint->setShortcut(QString("Ctrl+P"));
+    ui->actionClose->setShortcut(QString("Ctrl+Shift+W"));
+    ui->actionQuit->setShortcut(QString("Ctrl+Q"));
+    //Edit Menu
+    ui->actionCut->setShortcut(QString("Ctrl+X")); //not implemented
+    ui->actionCopy->setShortcut(QString("Ctrl+C"));
+    ui->actionPaste->setShortcut(QString("Ctrl+V"));
+    ui->actionPaste_as_new_image->setShortcut(QString("Ctrl+Shift+V"));
+    ui->actionUndo->setShortcut(QString("Ctrl+Z"));
+    ui->actionRedo->setShortcut(QString("Ctrl+Y"));
+    ui->actionImage_properties->setShortcut(QString("Ctrl+J"));
+    //Image Menu
+    ui->actionDuplicate->setShortcut(QString("Ctrl+U"));
+    ui->actionImage_Size->setShortcut(QString("Ctrl+H"));
+    ui->actionCrop->setShortcut(QString("Ctrl+Shift+H"));
+    // Selection Menu
+    ui->actionSelect_all->setShortcut(QString("Ctrl+A"));
+    //View Menu
+    ui->actionToolpalette->setShortcut(QString("Ctrl+L"));
+    ui->actionZoom_in->setShortcut(QKeySequence::ZoomIn);
+    ui->actionZoom_out->setShortcut(QKeySequence::ZoomOut);
+    ui->actionOriginal_size->setShortcut(QString("Ctrl+0"));
+    ui->actionFull_screen->setShortcut(QString("Ctrl+F"));
+    */
+}
+
+
 void ImageViewer::on_action_About_triggered()
 {
     QMessageBox::about(this, tr("About Image Viewer"),
@@ -293,4 +333,132 @@ void ImageViewer::on_action_About_triggered()
                    "(QScrollArea::widgetResizable), can be used to implement "
                    "zooming and scaling features. </p><p>In addition the example "
                    "shows how to use QPainter to print an image.</p>"));
+}
+
+bool ImageViewer::handleCloseTabs()
+{
+    QList<QMdiSubWindow *> windows;
+
+    for (int i = 0; i < windows.size(); ++i)
+    {
+       QMdiSubWindow *subWindow = windows.at(i);
+        if(subWindow->isWindowModified())
+        {
+            if (handleCloseChildWindow(subWindow))
+               return true;
+        }
+        else
+        {
+           subWindow->close();
+           qCritical("Close event");
+           qCritical("Close event");
+        }
+    }
+
+    return false;
+}
+
+bool ImageViewer::saveImage(const QString &fileName, int quality)
+{
+    if (fileName.isEmpty())
+        return false;
+    return image.isNull() ? image.save(fileName,nullptr,quality) : false;
+}
+
+
+void ImageViewer::saveContent()
+{
+    QString currentFileName = this->FileName;
+
+    if(currentFileName.contains(UNTITLED_TAB_NAME + " [*]"))
+    {
+        on_action_Save_as_triggered();
+    }
+    else
+    {
+        saveImage(currentFileName.mid(0,currentFileName.length() - 4),-1);
+        //ui->mdiArea->currentSubWindow()->setWindowModified(false);
+    }
+}
+
+
+bool ImageViewer::handleCloseChildWindow(QMdiSubWindow *subWindow)
+{
+    if (!subWindow)
+        return false;
+
+   // ui->mdiArea->setActiveSubWindow(subWindow);
+
+    if (subWindow->isWindowModified())
+    {
+        int buttonCode = QMessageBox::question(this, tr("Unsaved Changes"), tr("Save changes before leaving?"),
+                                               QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel);
+
+        if (buttonCode == QMessageBox::Cancel)
+        {
+            return true;
+        }
+        else if (buttonCode == QMessageBox::Yes)
+        {
+            saveContent();
+        }
+    }
+
+    subWindow->setWindowModified(false);
+    subWindow->close();
+
+  //  clearStatusArea();
+
+    return false;
+}
+
+
+void ImageViewer::saveGeometryState()
+{
+    // Save maximized window state if user maximizes the window manually.
+    if (this->isMaximized())
+    {
+        SETTINGS->setMaximizeWindow(true);
+    }
+    else if (!SETTINGS->isMaximizeWindow()) // Save custom window geometry.
+    {
+        SETTINGS->setCustomWindowGeometry(this->geometry());
+    }
+}
+
+void ImageViewer::closeEvent(QCloseEvent *event)
+{
+    if (!handleCloseTabs())
+    {
+        saveGeometryState();
+    }
+    else
+    {
+        event->ignore();
+    }
+}
+
+
+void ImageViewer::on_actionQuit_triggered()
+{
+    if (!handleCloseTabs())
+    {
+        saveGeometryState();
+        qApp->quit();
+    }
+}
+
+void ImageViewer::on_actionClose_triggered()
+{
+   // handleCloseChildWindow(ui->centralwidget->currentSubWindow());
+}
+
+void ImageViewer::on_actionClose_all_triggered()
+{
+    handleCloseTabs();
+}
+
+void ImageViewer::on_action_Exit_triggered()
+{
+    on_actionQuit_triggered();
 }

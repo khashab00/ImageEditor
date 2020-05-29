@@ -16,6 +16,7 @@
 #include<QDropEvent>
 #include<QDragEnterEvent>
 #include <QWheelEvent>
+#include "Settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageViewer; }
@@ -52,6 +53,15 @@ private slots:
 
     void on_action_About_triggered();
 
+    void on_actionClose_all_triggered();
+
+    void on_actionClose_triggered();
+
+    void on_actionQuit_triggered();
+
+
+    void on_action_Exit_triggered();
+
 private:
     void updateActions();
     void setImage(const QImage &newImage);
@@ -67,10 +77,21 @@ private:
     // for mouse zooming
     void wheelEvent(QWheelEvent *event);
     /* -------------- */
+
+    void closeEvent(QCloseEvent *event);
+    void saveGeometryState();
+    void saveContent();
+    bool handleCloseTabs();
+    bool handleCloseChildWindow(QMdiSubWindow *subWindow);
+    bool saveImage(const QString &fileName, int quality);
+
+    void createKeyboardShortcuts();
+
     Ui::ImageViewer *ui;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
+    QString FileName;
     double scaleFactor = 1;
 #if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
     QPrinter printer;
