@@ -86,7 +86,8 @@ private:
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
-    double scaleFactor = 1;
+    double scaleFactor = 1.0;
+    int zoomLevel = 100;
 
     QDialog *dlg = new Dialog();
 

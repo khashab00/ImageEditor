@@ -142,9 +142,9 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
 {
        int numDegrees = event->angleDelta() .y();
 
-       if (numDegrees > 0 && scaleFactor < 3) {
+       if (numDegrees > 0 && scaleFactor < 4) {
           on_action_Zoom_in_triggered();
-       } else if (numDegrees < 0 && scaleFactor > 0.8) {
+       } else if (numDegrees < 0 && scaleFactor > 0.25) {
           on_action_Zoom_out_triggered();
        }
 
@@ -192,15 +192,15 @@ void ImageViewer::setImage(const QImage &newImage)
 void ImageViewer::scaleImage(double factor)
 { 
     Q_ASSERT(imageLabel->pixmap());
-    scaleFactor *= factor;
+    scaleFactor += factor;
     qDebug()<<scaleFactor;
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
 
     adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(scrollArea->verticalScrollBar(), factor);
 
-    ui->action_Zoom_in->setEnabled(scaleFactor < 3.0);
-    ui->action_Zoom_out->setEnabled(scaleFactor > 0.333);
+    ui->action_Zoom_in->setEnabled(scaleFactor < 4.0);
+    ui->action_Zoom_out->setEnabled(scaleFactor > 0.25);
 
 }
 
@@ -231,9 +231,9 @@ void ImageViewer::on_action_Zoom_in_triggered()
 {
     if( !image.isNull())
     {
-        scaleImage(1.25);
-        QSize size = image.size();
-        QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
+        scaleImage(0.25);
+        zoomLevel +=25;
+        QString sizeString = QString("(%1 %2 %3)").arg(tr("Zoom Level: ")).arg(zoomLevel).arg("%");
         statusBar()->showMessage(sizeString);
     }
     else
@@ -246,9 +246,9 @@ void ImageViewer::on_action_Zoom_out_triggered()
 {
     if( !image.isNull())
     {
-        scaleImage(0.8);
-        QSize size = image.size();
-        QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
+        scaleImage(-0.25);
+        zoomLevel -=25;
+        QString sizeString = QString("(%1 %2 %3)").arg(tr("Zoom Level: ")).arg(zoomLevel).arg("%");
         statusBar()->showMessage(sizeString);
     }
     else
@@ -261,6 +261,9 @@ void ImageViewer::on_action_Zoom_100_triggered()
 {
     imageLabel->adjustSize();
     scaleFactor = 1.0;
+    zoomLevel =100;
+    QString sizeString = QString("(%1 %2 %3)").arg(tr("Zoom Level: ")).arg(zoomLevel).arg("%");
+    statusBar()->showMessage(sizeString);
 }
 
 void ImageViewer::on_action_Fit_to_Window_triggered()
