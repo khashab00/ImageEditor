@@ -17,6 +17,8 @@
 #include<QDragEnterEvent>
 #include <QWheelEvent>
 
+#include"dialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageViewer; }
 QT_END_NAMESPACE
@@ -52,6 +54,10 @@ private slots:
 
     void on_action_About_triggered();
 
+    void on_action_Show_Dialog_triggered();
+
+    void on_action_About_Qt_triggered();
+
 private:
     void updateActions();
     void setImage(const QImage &newImage);
@@ -62,16 +68,28 @@ private:
     // for drag and drop implementation
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
-    /*//////////////////////////*/
+    /*-----------------*/
 
     // for mouse zooming
     void wheelEvent(QWheelEvent *event);
     /* -------------- */
+
+    //Draging by mouse
+    QPoint offset;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+    /*---------------*/
+
     Ui::ImageViewer *ui;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
     double scaleFactor = 1;
+
+    QDialog *dlg = new Dialog();
+
 #if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
     QPrinter printer;
 #endif

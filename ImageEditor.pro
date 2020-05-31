@@ -17,13 +17,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dialog.cpp \
     main.cpp \
     imageviewer.cpp
 
 HEADERS += \
+    dialog.h \
     imageviewer.h
 
 FORMS += \
+    dialog.ui \
     imageviewer.ui
 
 TRANSLATIONS += \

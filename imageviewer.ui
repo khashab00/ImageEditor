@@ -115,13 +115,16 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_New"/>
    <addaction name="action_Open"/>
    <addaction name="action_Save"/>
    <addaction name="action_Save_as"/>
    <addaction name="action_Print"/>
+   <addaction name="action_Exit"/>
    <addaction name="action_Copy"/>
    <addaction name="action_Cut"/>
    <addaction name="action_Paste"/>
+   <addaction name="action_Zoom_100"/>
    <addaction name="action_Zoom_in"/>
    <addaction name="action_Zoom_out"/>
   </widget>
@@ -218,13 +221,13 @@
     <string>&amp;Zoom in</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+]</string>
+    <string>Ctrl+Shift+=</string>
    </property>
   </action>
   <action name="action_Zoom_out">
    <property name="icon">
     <iconset resource="ressources.qrc">
-     <normaloff>:/images/images/zoom-out.png</normaloff>:/images/images/zoom-out.png</iconset>
+     <normaloff>:/images/images/zoomout.png</normaloff>:/images/images/zoomout.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Zoom out</string>
@@ -234,8 +237,15 @@
    </property>
   </action>
   <action name="action_Zoom_100">
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/images/images/zoom.png</normaloff>:/images/images/zoom.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Zoom 100%</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
    </property>
   </action>
   <action name="action_Fit_to_Window">
@@ -243,10 +253,13 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>&amp;Fit to Window</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
   <action name="action_Show_Dialog">

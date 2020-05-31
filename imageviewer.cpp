@@ -25,8 +25,9 @@ ImageViewer::ImageViewer(QWidget *parent)
     setAcceptDrops(true);
     setWindowTitle(tr("Image Editor"));
 
-   resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    updateActions();
 
+   resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 }
 
 bool ImageViewer::loadFile(const QString &fileName)
@@ -93,10 +94,13 @@ void ImageViewer::on_action_Open_triggered()
 void ImageViewer::updateActions()
 {
     ui->action_Save_as->setEnabled(!image.isNull());
+    ui->action_Save->setEnabled(!image.isNull());
     ui->action_Copy->setEnabled(!image.isNull());
-    ui->action_Zoom_in->setEnabled(!ui->action_Fit_to_Window->isChecked());
-    ui->action_Zoom_out->setEnabled(!ui->action_Fit_to_Window->isChecked());
-    ui->action_Zoom_100->setEnabled(!ui->action_Fit_to_Window->isChecked());
+    ui->action_Cut->setEnabled(!image.isNull());
+    ui->action_New->setEnabled(!image.isNull());
+    ui->action_Zoom_in->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull() );
+    ui->action_Zoom_out->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull());
+    ui->action_Zoom_100->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull());
 }
 
 bool ImageViewer::saveFile(const QString &fileName)
@@ -138,13 +142,36 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
 {
        int numDegrees = event->angleDelta() .y();
 
-       if (numDegrees > 0) {
-           on_action_Zoom_in_triggered();
-       } else {
-           on_action_Zoom_out_triggered();
+       if (numDegrees > 0 && scaleFactor < 3) {
+          on_action_Zoom_in_triggered();
+       } else if (numDegrees < 0 && scaleFactor > 0.8) {
+          on_action_Zoom_out_triggered();
        }
 
        event->accept();
+}
+
+void ImageViewer::mousePressEvent(QMouseEvent *event)
+{
+     offset = event->pos();
+}
+
+void ImageViewer::mouseMoveEvent(QMouseEvent *event)
+{
+    if(event->buttons() & Qt::LeftButton)
+       {
+           setCursor(Qt::ClosedHandCursor);
+           imageLabel->move(mapToParent(event->pos() - offset));
+
+    }
+}
+
+void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
+{
+    if(!event->buttons() & Qt::LeftButton)
+    {
+        setCursor(Qt::ArrowCursor);
+    }
 }
 
 void ImageViewer::setImage(const QImage &newImage)
@@ -163,9 +190,10 @@ void ImageViewer::setImage(const QImage &newImage)
 }
 
 void ImageViewer::scaleImage(double factor)
-{
+{ 
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor *= factor;
+    qDebug()<<scaleFactor;
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
 
     adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
@@ -173,6 +201,7 @@ void ImageViewer::scaleImage(double factor)
 
     ui->action_Zoom_in->setEnabled(scaleFactor < 3.0);
     ui->action_Zoom_out->setEnabled(scaleFactor > 0.333);
+
 }
 
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
@@ -200,18 +229,32 @@ void ImageViewer::on_action_Print_triggered()
 
 void ImageViewer::on_action_Zoom_in_triggered()
 {
-    scaleImage(1.25);
-    QSize size = image.size();
-    QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
-    statusBar()->showMessage(sizeString);
+    if( !image.isNull())
+    {
+        scaleImage(1.25);
+        QSize size = image.size();
+        QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
+        statusBar()->showMessage(sizeString);
+    }
+    else
+    {
+        ui->statusbar->showMessage(tr("Load an Image"));
+    }
 }
 
 void ImageViewer::on_action_Zoom_out_triggered()
 {
-    scaleImage(0.8);
-    QSize size = image.size();
-    QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
-    statusBar()->showMessage(sizeString);
+    if( !image.isNull())
+    {
+        scaleImage(0.8);
+        QSize size = image.size();
+        QString sizeString = QString("(%1,%2)").arg(size.width()).arg(size.height());
+        statusBar()->showMessage(sizeString);
+    }
+    else
+    {
+        ui->statusbar->showMessage(tr("Load an Image"));
+    }
 }
 
 void ImageViewer::on_action_Zoom_100_triggered()
@@ -280,17 +323,32 @@ void ImageViewer::on_action_Paste_triggered()
 
 void ImageViewer::on_action_About_triggered()
 {
-    QMessageBox::about(this, tr("About Image Viewer"),
-                tr("<p>The <b>Image Viewer</b> example shows how to combine QLabel "
-                   "and QScrollArea to display an image. QLabel is typically used "
-                   "for displaying a text, but it can also display an image. "
-                   "QScrollArea provides a scrolling view around another widget. "
-                   "If the child widget exceeds the size of the frame, QScrollArea "
-                   "automatically provides scroll bars. </p><p>The example "
-                   "demonstrates how QLabel's ability to scale its contents "
+    QMessageBox::about(this, tr("About Image Editor"),
+                tr("<p>The <b>Image Editor</b> project is part of the course "
+                   "software development in HTW</p>"
+                   "<p>The project demonstrates how QLabel's ability to scale its contents "
                    "(QLabel::scaledContents), and QScrollArea's ability to "
                    "automatically resize its contents "
                    "(QScrollArea::widgetResizable), can be used to implement "
-                   "zooming and scaling features. </p><p>In addition the example "
-                   "shows how to use QPainter to print an image.</p>"));
+                   "zooming and scaling features. </p>"
+                   "<p>In addition the project "
+                   "shows how to use QPainter to print an image and QDialog to show a dialog.</p>"));
+}
+
+void ImageViewer::on_action_Show_Dialog_triggered()
+{
+    //int x = -200, y = 0;
+     dlg->exec();
+}
+
+void ImageViewer::on_action_About_Qt_triggered()
+{
+    QMessageBox::about(this, tr("About Qt"),
+                tr("<p>The <b>Qt Creator 5.13.1</b> Built on Oct 4 2019 01:16:32 "
+                   "From revision ea829fa6d5 "
+                   "Copyright 2008-2019 The Qt Company Ltd. All rights reserved."
+                   " Copyright 2008-2019 The Qt Company Ltd. All rights reserved. "
+                   "The program is provided AS IS with NO WARRANTY OF ANY KIND, "
+                   "INCLUDING THE WARRANTY OF DESIGN,"
+                   "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>"));
 }
