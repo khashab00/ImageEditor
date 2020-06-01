@@ -28,6 +28,8 @@ ImageViewer::ImageViewer(QWidget *parent)
     updateActions();
 
    resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+
+   setCursor(Qt::ArrowCursor);
 }
 
 bool ImageViewer::loadFile(const QString &fileName)
@@ -60,6 +62,8 @@ bool ImageViewer::loadFile(const QString &fileName)
      return true;
 }
 
+///////////////////////////////////////////////////////////////////////
+
 static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
 {
     static bool firstDialog = true;
@@ -83,6 +87,8 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
         dialog.setDefaultSuffix("jpg");
 }
 
+///////////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Open_triggered()
 {
    QFileDialog dialog(this, tr("Open File"));
@@ -90,6 +96,8 @@ void ImageViewer::on_action_Open_triggered()
    while (dialog.exec() ==
           QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
 }
+
+///////////////////////////////////////////////////////////////////////
 
 void ImageViewer::updateActions()
 {
@@ -102,6 +110,8 @@ void ImageViewer::updateActions()
     ui->action_Zoom_out->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull());
     ui->action_Zoom_100->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull());
 }
+
+//////////////////////////////////////////////////////////////////////
 
 bool ImageViewer::saveFile(const QString &fileName)
 {
@@ -118,11 +128,15 @@ bool ImageViewer::saveFile(const QString &fileName)
      return true;
 }
 
+///////////////////////////////////////////////////////////////////////
+
 void ImageViewer::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("text/uri-list"))
         event->acceptProposedAction();
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void ImageViewer::dropEvent(QDropEvent *event)
 {
@@ -138,6 +152,8 @@ void ImageViewer::dropEvent(QDropEvent *event)
 
 }
 
+///////////////////////////////////////////////////////////////////////
+
 void ImageViewer::wheelEvent(QWheelEvent *event)
 {
        int numDegrees = event->angleDelta() .y();
@@ -151,10 +167,14 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
        event->accept();
 }
 
+//////////////////////////////////////////////////////////////////////
+
 void ImageViewer::mousePressEvent(QMouseEvent *event)
 {
      offset = event->pos();
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void ImageViewer::mouseMoveEvent(QMouseEvent *event)
 {
@@ -166,6 +186,8 @@ void ImageViewer::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+///////////////////////////////////////////////////////////////////////
+
 void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
 {
     if(!event->buttons() & Qt::LeftButton)
@@ -173,6 +195,8 @@ void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
         setCursor(Qt::ArrowCursor);
     }
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void ImageViewer::setImage(const QImage &newImage)
 {
@@ -189,6 +213,8 @@ void ImageViewer::setImage(const QImage &newImage)
         imageLabel->adjustSize();
 }
 
+//////////////////////////////////////////////////////////////////////
+
 void ImageViewer::scaleImage(double factor)
 { 
     Q_ASSERT(imageLabel->pixmap());
@@ -204,11 +230,15 @@ void ImageViewer::scaleImage(double factor)
 
 }
 
+///////////////////////////////////////////////////////////////////////
+
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 {
     scrollBar->setValue(int(factor * scrollBar->value()
                          + ((factor - 1) * scrollBar->pageStep()/2)));
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Print_triggered()
 {
@@ -227,6 +257,8 @@ void ImageViewer::on_action_Print_triggered()
   #endif
 }
 
+//////////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Zoom_in_triggered()
 {
     if( !image.isNull())
@@ -241,6 +273,8 @@ void ImageViewer::on_action_Zoom_in_triggered()
         ui->statusbar->showMessage(tr("Load an Image"));
     }
 }
+
+/////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Zoom_out_triggered()
 {
@@ -257,6 +291,8 @@ void ImageViewer::on_action_Zoom_out_triggered()
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Zoom_100_triggered()
 {
     imageLabel->adjustSize();
@@ -265,6 +301,8 @@ void ImageViewer::on_action_Zoom_100_triggered()
     QString sizeString = QString("(%1 %2 %3)").arg(tr("Zoom Level: ")).arg(zoomLevel).arg("%");
     statusBar()->showMessage(sizeString);
 }
+
+/////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Fit_to_Window_triggered()
 {
@@ -275,10 +313,14 @@ void ImageViewer::on_action_Fit_to_Window_triggered()
     updateActions();
 }
 
+/////////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Save_triggered()
 {
     //TODO
 }
+
+/////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Save_as_triggered()
 {
@@ -287,12 +329,16 @@ void ImageViewer::on_action_Save_as_triggered()
     while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
 }
 
+////////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Copy_triggered()
 {
     #ifndef QT_NO_CLIPBOARD
         QGuiApplication::clipboard()->setImage(image);
     #endif // !QT_NO_CLIPBOARD
 }
+
+///////////////////////////////////////////////////////////////////
 
 #ifndef QT_NO_CLIPBOARD
 static QImage clipboardImage()
@@ -307,6 +353,8 @@ static QImage clipboardImage()
     return QImage();
 }
 #endif // !QT_NO_CLIPBOARD
+
+//////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Paste_triggered()
 {
@@ -324,6 +372,8 @@ void ImageViewer::on_action_Paste_triggered()
 #endif // !QT_NO_CLIPBOARD
 }
 
+//////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_About_triggered()
 {
     QMessageBox::about(this, tr("About Image Editor"),
@@ -338,11 +388,15 @@ void ImageViewer::on_action_About_triggered()
                    "shows how to use QPainter to print an image and QDialog to show a dialog.</p>"));
 }
 
+/////////////////////////////////////////////////////////////////
+
 void ImageViewer::on_action_Show_Dialog_triggered()
 {
     //int x = -200, y = 0;
      dlg->exec();
 }
+
+////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_About_Qt_triggered()
 {
