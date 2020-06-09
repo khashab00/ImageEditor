@@ -1,13 +1,27 @@
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
-
+#include "Settings.h"
+#include <QSettings>
+namespace
+{
+    const QString UNTITLED_TAB_NAME = QObject::tr("Untitled");
+}
 ImageViewer::ImageViewer(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ImageViewer)
     ,scrollArea(new QScrollArea)
     , scaleFactor(1)
 {
+
     ui->setupUi(this);
+
+    // Setup some other defaults on startup
+      setWindowSize();
+
+
+    // Add Settings Widgets to the Dock
+    addSettingsWidgets();
+
 
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Base);
@@ -27,44 +41,89 @@ ImageViewer::ImageViewer(QWidget *parent)
 
     updateActions();
 
-   resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
+    setCursor(Qt::ArrowCursor);
+
+   // resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 
    setCursor(Qt::ArrowCursor);
 }
 
-bool ImageViewer::loadFile(const QString &fileName)
+////////////////////
+/// \brief ImageViewer::addSettingsWidgets
+///////////////////
+void ImageViewer::addSettingsWidgets()
 {
-    QImageReader reader(fileName);
-    reader.setAutoTransform(true);
-    const QImage newImage = reader.read();
-    if (newImage.isNull())
+    const QString message = tr("open file location");
+    statusBar()->showMessage(message);
+
+
+    SETTINGS->settings = new QSettings("Aazrak", "ImageEditor");
+    restoreGeometry(SETTINGS->settings->value("ImageViewer/geometry").toByteArray());
+    restoreState(SETTINGS->settings->value("ImageViewer/windowState").toByteArray());
+    if(!SETTINGS->isMaximizeWindow())
     {
-       QMessageBox::
-         information(this, QGuiApplication::applicationDisplayName(),
-                     tr("Cannot load %1: %2")
-                     .arg(QDir::toNativeSeparators(fileName), reader.errorString()));
-           return false;
+           move(SETTINGS->settings->value( "ImageViewer/pos", pos() ).toPoint());
+           resize(SETTINGS->settings->value( "ImageViewer/size", size() ).toSize());
     }
-    setImage(newImage);
-
-    setWindowFilePath(fileName);
-
-    QFileInfo windowTitle(fileName);
-
-    setWindowTitle(tr("%1").arg(windowTitle.fileName()));
-
-    const QString message = tr("Opened \"%1\", %2x%3, Depth: %4").arg(QDir::
-                              toNativeSeparators(fileName)).
-                                arg(image.width()).
-                                arg(image.height()).
-                                arg(image.depth());
-     statusBar()->showMessage(message);
-     return true;
 }
 
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+/// \brief ImageViewer::loadFile
+/// \param fileName
+/// \return
+///
+/////////////////////////////////////////////
+bool ImageViewer::loadFile(const QString &fileName)
+{
+    if(!fileExists(fileName))
+    {
+        showError(tr("Image does not exist at this file path"));
+        return false;
+    }
+    else
+    {
+        QString updatedFileName = prepareFile(fileName);
 
-static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
+        if (!updatedFileName.isEmpty())
+        {
+            QImageReader reader(fileName);
+            reader.setAutoTransform(true);
+            const QImage newImage = reader.read();
+            if (newImage.isNull())
+            {
+               QMessageBox::
+                 information(this, QGuiApplication::applicationDisplayName(),
+                             tr("Cannot load %1: %2")
+                             .arg(QDir::toNativeSeparators(fileName), reader.errorString()));
+                   return false;
+            }
+            setImage(newImage);
+
+            setWindowFilePath(fileName);
+
+            QFileInfo windowTitle(fileName);
+
+            setWindowTitle(tr("%1").arg(windowTitle.fileName()));
+
+            const QString message = tr("Opened \"%1\", %2x%3, Depth: %4").arg(QDir::
+                                      toNativeSeparators(fileName)).
+                                        arg(image.width()).
+                                        arg(image.height()).
+                                        arg(image.depth());
+             statusBar()->showMessage(message);
+             return true;
+        }
+    }
+    return false;
+}
+
+
+//////////////
+/// \brief initializeImageFileDialog
+/// \param dialog
+/// \param acceptMode
+//////////////////
+void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode)
 {
     static bool firstDialog = true;
 
@@ -75,14 +134,30 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
         dialog.setDirectory(picturesLocations.isEmpty() ? QDir::currentPath() : picturesLocations.last());
     }
 
+    // get supported image file types
     QStringList mimeTypeFilters;
-    const QByteArrayList supportedMimeTypes = acceptMode == QFileDialog::AcceptOpen
-        ? QImageReader::supportedMimeTypes() : QImageWriter::supportedMimeTypes();
-    foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
+    const QByteArrayList supportedMimeTypes = QImageReader::supportedMimeTypes();
+    foreach(const QByteArray& mimeTypeName, supportedMimeTypes) {
         mimeTypeFilters.append(mimeTypeName);
-    mimeTypeFilters.sort();
+    }
+    mimeTypeFilters.sort(Qt::CaseInsensitive);
+
+    // compose filter for all supported types
+    QMimeDatabase mimeDB;
+    QStringList allSupportedFormats;
+    for(const QString& mimeTypeFilter: mimeTypeFilters) {
+        QMimeType mimeType = mimeDB.mimeTypeForName(mimeTypeFilter);
+        if(mimeType.isValid()) {
+            allSupportedFormats.append(mimeType.globPatterns());
+        }
+    }
+    QString allSupportedFormatsFilter = QString("All supported formats (%1)").arg(allSupportedFormats.join(' '));
+    dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setMimeTypeFilters(mimeTypeFilters);
-    dialog.selectMimeTypeFilter("Images (*.png *.xpm *.jpeg *.bmp)");
+    QStringList nameFilters = dialog.nameFilters();
+    nameFilters.append(allSupportedFormatsFilter);
+    dialog.setNameFilters(nameFilters);
+    dialog.selectNameFilter(allSupportedFormatsFilter);
     if (acceptMode == QFileDialog::AcceptSave)
         dialog.setDefaultSuffix("jpg");
 }
@@ -91,13 +166,132 @@ static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMo
 
 void ImageViewer::on_action_Open_triggered()
 {
+    QFileDialog dialog(this, tr("Open File"));
+    initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
+    while (dialog.exec() ==
+           QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {
+        if(dialog.selectedFiles().length()>0)
+        {
+            for(int i=0;i<dialog.selectedFiles().length();i++)
+            {
+                loadFile(dialog.selectedFiles()[i]);
+            }
+
+            if(SETTINGS->getPreviouslyOpened() == true)
+            {
+                QDir d = QFileInfo(dialog.selectedFiles()[0]).absoluteDir();
+                SETTINGS->setOpenFolder(d.absolutePath());
+            }
+        }
+
+    }
+}
+
+bool ImageViewer::fileTypeSupported(QList<QByteArray> formats, QString ext)
+{
+    bool status = false;
+    for(int i=0;i<formats.length();i++)
+    {
+        if(formats[i] == ext)
+        {
+            status = true;
+        }
+    }
+    return status;
+}
+
+QString ImageViewer::prepareFile(const QString& fileName)
+{
+    QString newFileName = fileName;
+    QFileInfo info(fileName);
+    QImageReader reader(fileName);
+    reader.setDecideFormatFromContent(true); // Autodetect file type without depending on extension
+
+    if(info.completeSuffix().toLower() != "jpg" && info.completeSuffix() != reader.format() && fileTypeSupported(reader.supportedImageFormats(),reader.format()))
+    {
+        int ret = QMessageBox::warning(this,
+                    tr("Incorrect file extension detected"),
+                    tr("Do you want to update this extension?"),
+                    QMessageBox::Save,QMessageBox::Cancel);
+
+        if(ret == QMessageBox::Save)
+        {
+          newFileName = info.path()+QDir::separator()+info.baseName()+"."+reader.format();
+          QDir dir (info.baseName());
+          dir.rename(fileName,newFileName);
+        }
+        else if(ret == QMessageBox::Cancel)
+        {
+            newFileName = "";
+        }
+    }
+    else if(!fileTypeSupported(reader.supportedImageFormats(),reader.format()))
+    {
+        newFileName = "";
+        showError(tr("Please open a valid image file"));
+    }
+
+    return newFileName;
+}
+
+//////////////////
+/// \brief ImageViewer::updateRecentFilesMenu
+///////////////////
+void ImageViewer::updateRecentFilesMenu()
+{
+    ui->menuRecent_Files->clear();
+
+    QList<QVariant> recentFiles = SETTINGS->getRecentFiles();
+    QList<QVariant>::iterator i;
+
+    for(i = recentFiles.begin(); i != recentFiles.end(); i++)
+    {
+        const QString& fileName = (*i).toString();
+        if(fileExists(fileName))
+        {
+            QAction* action = ui->menuRecent_Files->addAction(fileName);
+            connect(action, &QAction::triggered, [this, fileName] () {
+                loadFile(fileName);
+            });
+        }
+    }
+}
+
+//////////////
+/// \brief ImageViewer::fileExists
+/// \param path
+/// \return
+////////////////////
+bool ImageViewer::fileExists(QString path) {
+    QFileInfo check_file(path);
+
+    return (check_file.exists() && check_file.isFile());
+}
+
+
+///////////
+/// \brief ImageViewer::showError
+/// \param message
+/////////////////
+void ImageViewer::showError(const QString &message)
+{
+    QMessageBox::critical(this, tr("Error"), message);
+}
+
+////////////////
+/// \brief ImageViewer::on_action_Open_triggered
+///////////////////////////7
+/*void ImageViewer::on_action_Open_triggered()
+{
    QFileDialog dialog(this, tr("Open File"));
    initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
    while (dialog.exec() ==
           QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {}
-}
+}*/
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////
+/// \brief ImageViewer::updateActions
+///////////////////////
 
 void ImageViewer::updateActions()
 {
@@ -111,7 +305,12 @@ void ImageViewer::updateActions()
     ui->action_Zoom_100->setEnabled(!ui->action_Fit_to_Window->isChecked() && !image.isNull());
 }
 
-//////////////////////////////////////////////////////////////////////
+
+/////////////////
+/// \brief ImageViewer::saveFile
+/// \param fileName
+/// \return
+/////////////////////////////////////7
 
 bool ImageViewer::saveFile(const QString &fileName)
 {
@@ -163,31 +362,23 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
        } else if (numDegrees < 0 && scaleFactor > 0.25) {
           on_action_Zoom_out_triggered();
        }
-
        event->accept();
 }
-
 //////////////////////////////////////////////////////////////////////
-
 void ImageViewer::mousePressEvent(QMouseEvent *event)
 {
      offset = event->pos();
 }
-
 //////////////////////////////////////////////////////////////////////
-
 void ImageViewer::mouseMoveEvent(QMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
        {
            setCursor(Qt::ClosedHandCursor);
            imageLabel->move(mapToParent(event->pos() - offset));
-
     }
 }
-
 ///////////////////////////////////////////////////////////////////////
-
 void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
 {
     if(!event->buttons() & Qt::LeftButton)
@@ -203,12 +394,10 @@ void ImageViewer::setImage(const QImage &newImage)
     image = newImage;
     imageLabel->setPixmap(QPixmap::fromImage(image));
     scaleFactor = 1.0;
-
     scrollArea->setVisible(true);
     ui->action_Print->setEnabled(true);
     ui->action_Fit_to_Window->setEnabled(true);
     updateActions();
-
     if (!ui->action_Fit_to_Window->isChecked())
         imageLabel->adjustSize();
 }
@@ -221,16 +410,15 @@ void ImageViewer::scaleImage(double factor)
     scaleFactor += factor;
     qDebug()<<scaleFactor;
     imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
-
     adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(scrollArea->verticalScrollBar(), factor);
+
 
     ui->action_Zoom_in->setEnabled(scaleFactor < 4.0);
     ui->action_Zoom_out->setEnabled(scaleFactor > 0.25);
 
 }
 
-///////////////////////////////////////////////////////////////////////
 
 void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, double factor)
 {
@@ -274,8 +462,6 @@ void ImageViewer::on_action_Zoom_in_triggered()
     }
 }
 
-/////////////////////////////////////////////////////////////////////
-
 void ImageViewer::on_action_Zoom_out_triggered()
 {
     if( !image.isNull())
@@ -291,8 +477,6 @@ void ImageViewer::on_action_Zoom_out_triggered()
     }
 }
 
-//////////////////////////////////////////////////////////////////////
-
 void ImageViewer::on_action_Zoom_100_triggered()
 {
     imageLabel->adjustSize();
@@ -301,6 +485,7 @@ void ImageViewer::on_action_Zoom_100_triggered()
     QString sizeString = QString("(%1 %2 %3)").arg(tr("Zoom Level: ")).arg(zoomLevel).arg("%");
     statusBar()->showMessage(sizeString);
 }
+/////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////
 
@@ -317,7 +502,11 @@ void ImageViewer::on_action_Fit_to_Window_triggered()
 
 void ImageViewer::on_action_Save_triggered()
 {
-    //TODO
+    //TODO save
+    if (!image.isNull())
+    {
+        saveContent();
+    }
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -372,7 +561,6 @@ void ImageViewer::on_action_Paste_triggered()
 #endif // !QT_NO_CLIPBOARD
 }
 
-//////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_About_triggered()
 {
@@ -387,6 +575,7 @@ void ImageViewer::on_action_About_triggered()
                    "<p>In addition the project "
                    "shows how to use QPainter to print an image and QDialog to show a dialog.</p>"));
 }
+
 
 /////////////////////////////////////////////////////////////////
 
@@ -409,3 +598,166 @@ void ImageViewer::on_action_About_Qt_triggered()
                    "INCLUDING THE WARRANTY OF DESIGN,"
                    "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.</p>"));
 }
+
+bool ImageViewer::handleCloseTabs()
+{
+    QList<QMdiSubWindow *> windows;
+
+    for (int i = 0; i < windows.size(); ++i)
+    {
+       QMdiSubWindow *subWindow = windows.at(i);
+        if(subWindow->isWindowModified())
+        {
+            if (handleCloseChildWindow(subWindow))
+               return true;
+        }
+        else
+        {
+           subWindow->close();
+           qCritical("Close event");
+           qCritical("Close event");
+        }
+    }
+
+    return false;
+}
+
+bool ImageViewer::saveImage(const QString &fileName, int quality)
+{
+    if (fileName.isEmpty())
+        return false;
+    return image.isNull() ? image.save(fileName,nullptr,quality) : false;
+}
+
+
+void ImageViewer::saveContent()
+{
+    QString currentFileName = this->FileName;
+
+    if(currentFileName.contains(UNTITLED_TAB_NAME + " [*]"))
+    {
+        on_action_Save_as_triggered();
+    }
+    else
+    {
+        saveImage(currentFileName.mid(0,currentFileName.length() - 4),-1);
+        //ui->mdiArea->currentSubWindow()->setWindowModified(false);
+    }
+}
+
+
+bool ImageViewer::handleCloseChildWindow(QMdiSubWindow *subWindow)
+{
+    if (!subWindow)
+        return false;
+
+   // ui->mdiArea->setActiveSubWindow(subWindow);
+
+    if (subWindow->isWindowModified())
+    {
+        int buttonCode = QMessageBox::question(this, tr("Unsaved Changes"), tr("Save changes before leaving?"),
+                                               QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel);
+
+        if (buttonCode == QMessageBox::Cancel)
+        {
+            return true;
+        }
+        else if (buttonCode == QMessageBox::Yes)
+        {
+            saveContent();
+        }
+    }
+
+    subWindow->setWindowModified(false);
+    subWindow->close();
+
+  //  clearStatusArea();
+
+    return false;
+}
+
+void ImageViewer::setWindowSize()
+{
+    bool maximize = SETTINGS->isMaximizeWindow();
+
+    if (maximize)
+    {
+        this->setWindowState(Qt::WindowMaximized);
+    }
+    else
+    {
+        QRect geometry = SETTINGS->customWindowGeometry();
+        if (geometry.isValid())
+            this->setGeometry(geometry);
+    }
+}
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::saveGeometryState(QCloseEvent *event)
+{
+    // Save maximized window state if user maximizes the window manually.
+    if (this->isMaximized())
+    {
+        SETTINGS->setMaximizeWindow(true);
+        SETTINGS->settings = new QSettings ("Aazrak", "ImageEditor");
+        SETTINGS->settings->setValue("geometry", saveGeometry());
+        SETTINGS->settings->setValue("windowState", saveState());
+        QMainWindow::saveState();
+        QWidget::closeEvent(event);
+    }
+    else if (!this->isMaximized()) // Save custom window geometry.
+    {
+        SETTINGS->setCustomWindowGeometry(this->geometry());
+        SETTINGS->settings = new QSettings ("Aazrak", "ImageEditor");
+        SETTINGS->settings->setValue("geometry", saveGeometry());
+        SETTINGS->settings->setValue("windowState", saveState());
+        SETTINGS->settings->setValue( "pos", pos() );
+        SETTINGS->settings->setValue( "size", size() );
+
+
+        QMainWindow::saveState();
+        QWidget::closeEvent(event);
+        SETTINGS->setMaximizeWindow(false);
+    }
+}
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::closeEvent(QCloseEvent *event)
+{
+    if (!handleCloseTabs())
+    {
+        saveGeometryState(event);
+    }
+    else
+    {
+        event->ignore();
+    }
+}
+
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::on_actionQuit_triggered()
+{
+    if (!handleCloseTabs())
+    {
+        saveGeometryState(new QCloseEvent());
+        // add dealog to save changes
+        qApp->quit();
+    }
+
+}
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::on_actionClose_triggered()
+{
+   // handleCloseChildWindow(ui->centralwidget->currentSubWindow());
+}
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::on_actionClose_all_triggered()
+{
+    handleCloseTabs();
+}
+//////////////////////////////////////////////////////////////////////
+void ImageViewer::on_action_Exit_triggered()
+{
+    on_actionQuit_triggered();
+}
+
+
+
