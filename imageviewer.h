@@ -17,6 +17,7 @@
 #include<QDragEnterEvent>
 #include <QWheelEvent>
 #include "Settings.h"
+#include "dialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageViewer; }
@@ -59,8 +60,11 @@ private slots:
 
     void on_actionQuit_triggered();
 
-
     void on_action_Exit_triggered();
+
+    void on_action_Show_Dialog_triggered();
+
+    void on_action_About_Qt_triggered();
 
 private:
     void updateActions();
@@ -77,9 +81,23 @@ private:
     // for mouse zooming
     void wheelEvent(QWheelEvent *event);
     /* -------------- */
+    void addSettingsWidgets();
+
+    QPoint offset;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+    void showError(const QString &message);
+    bool fileExists(QString path);
+    void updateRecentFilesMenu();
+    QString prepareFile(const QString& fileName);
+    bool fileTypeSupported(QList<QByteArray> formats, QString ext);
+    static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
 
     void closeEvent(QCloseEvent *event);
-    void saveGeometryState();
+    void saveGeometryState(QCloseEvent *event);
+    void setWindowSize();
     void saveContent();
     bool handleCloseTabs();
     bool handleCloseChildWindow(QMdiSubWindow *subWindow);
@@ -88,14 +106,15 @@ private:
     void createKeyboardShortcuts();
 
     Ui::ImageViewer *ui;
+    int zoomLevel = 100;
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
     QString FileName;
     double scaleFactor = 1;
+    QDialog *dlg = new Dialog();
 #if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
     QPrinter printer;
 #endif
-
 };
 #endif // IMAGEVIEWER_H

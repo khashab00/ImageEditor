@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QObject>
+#include <QSettings>
 
 #define SETTINGS Settings::instance()
 
@@ -52,7 +53,7 @@ public:
     bool getMemParamsEnabled() const;
     void setUnit(int);
     int getUnit() const;
-
+ QSettings *settings;
 private:
     explicit Settings(QObject *parent = 0);
     Settings(const Settings &);
@@ -60,6 +61,8 @@ private:
     static Settings* m_instance;
     SettingsPrivate *d;
     static const int MAX_RECENTS_COUNT;
+
+
 signals:
     void multiWindowModeChanged(bool multiWindowMode);
 };
