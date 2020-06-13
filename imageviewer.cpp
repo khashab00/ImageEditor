@@ -152,14 +152,18 @@ void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::Ac
         }
     }
     QString allSupportedFormatsFilter = QString("All supported formats (%1)").arg(allSupportedFormats.join(' '));
-    dialog.setFileMode(QFileDialog::ExistingFile);
+    if(acceptMode == QFileDialog::AcceptOpen)
+            dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setMimeTypeFilters(mimeTypeFilters);
     QStringList nameFilters = dialog.nameFilters();
     nameFilters.append(allSupportedFormatsFilter);
     dialog.setNameFilters(nameFilters);
     dialog.selectNameFilter(allSupportedFormatsFilter);
     if (acceptMode == QFileDialog::AcceptSave)
-        dialog.setDefaultSuffix("jpg");
+       {
+            dialog.setAcceptMode(acceptMode);
+            dialog.setDefaultSuffix("jpg");
+       }
 }
 
 ///////////////////////////////////////////////////////////////////////
