@@ -55,6 +55,7 @@ private slots:
     void on_action_Paste_triggered();
 
     void on_action_About_triggered();
+
     void on_actionClose_all_triggered();
 
     void on_actionClose_triggered();
@@ -66,6 +67,11 @@ private slots:
     void on_action_Show_Dialog_triggered();
 
     void on_action_About_Qt_triggered();
+
+    void on_action_New_triggered();
+
+signals:
+    bool isModified();
 
 private:
     void updateActions();
@@ -84,16 +90,11 @@ private:
     /* -------------- */
 
     //Draging by mouse
-
     void addSettingsWidgets();
-
-
     QPoint offset;
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-
-
     /*---------------*/
 
     void showError(const QString &message);
@@ -113,13 +114,16 @@ private:
 
     void createKeyboardShortcuts();
 
+    void changeFotoTest();
+
 
     Ui::ImageViewer *ui;
-    int zoomLevel = 100;
+
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
 
+    int zoomLevel = 100;
     double scaleFactor = 1.0;
 
     QDialog *dlg = new Dialog();

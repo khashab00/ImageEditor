@@ -61,7 +61,7 @@
      <x>0</x>
      <y>0</y>
      <width>386</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Open">
@@ -126,7 +126,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_New"/>
-
    <addaction name="action_Open"/>
    <addaction name="action_Save"/>
    <addaction name="action_Save_as"/>
@@ -138,7 +137,6 @@
    <addaction name="action_Zoom_100"/>
    <addaction name="action_Zoom_in"/>
    <addaction name="action_Zoom_out"/>
-
   </widget>
   <action name="action_Open">
    <property name="icon">
@@ -233,13 +231,13 @@
     <string>&amp;Zoom in</string>
    </property>
    <property name="shortcut">
-     <string>Ctrl+Shift+=</string>
+    <string>Ctrl+Shift+=</string>
    </property>
   </action>
   <action name="action_Zoom_out">
    <property name="icon">
     <iconset resource="ressources.qrc">
-      <normaloff>:/images/images/zoomout.png</normaloff>:/images/images/zoomout.png</iconset>
+     <normaloff>:/images/images/zoomout.png</normaloff>:/images/images/zoomout.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Zoom out</string>
@@ -249,16 +247,16 @@
    </property>
   </action>
   <action name="action_Zoom_100">
-  <property name="icon">
-      <iconset resource="ressources.qrc">
-       <normaloff>:/images/images/zoom.png</normaloff>:/images/images/zoom.png</iconset>
-     </property>
+   <property name="icon">
+    <iconset resource="ressources.qrc">
+     <normaloff>:/images/images/zoom.png</normaloff>:/images/images/zoom.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Zoom 100%</string>
    </property>
    <property name="shortcut">
-      <string>Ctrl+0</string>
-     </property>
+    <string>Ctrl+0</string>
+   </property>
   </action>
   <action name="action_Fit_to_Window">
    <property name="checkable">
@@ -269,9 +267,6 @@
    </property>
    <property name="text">
     <string>&amp;Fit to Window</string>
-    </property>
-       <property name="shortcut">
-        <string>Ctrl+F</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>

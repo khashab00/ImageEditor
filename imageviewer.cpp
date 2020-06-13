@@ -355,6 +355,8 @@ void ImageViewer::dropEvent(QDropEvent *event)
 
 void ImageViewer::wheelEvent(QWheelEvent *event)
 {
+    changeFotoTest();
+
        int numDegrees = event->angleDelta() .y();
 
        if (numDegrees > 0 && scaleFactor < 4) {
@@ -363,6 +365,7 @@ void ImageViewer::wheelEvent(QWheelEvent *event)
           on_action_Zoom_out_triggered();
        }
        event->accept();
+
 }
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::mousePressEvent(QMouseEvent *event)
@@ -386,6 +389,13 @@ void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
         setCursor(Qt::ArrowCursor);
     }
 }
+
+////////////////////////////////////////////////////////////////////////
+/*bool ImageViewer::isModified()
+{
+    // Todo
+    return true;
+}*/
 
 //////////////////////////////////////////////////////////////////////
 
@@ -581,8 +591,8 @@ void ImageViewer::on_action_About_triggered()
 
 void ImageViewer::on_action_Show_Dialog_triggered()
 {
-    //int x = -200, y = 0;
-     dlg->exec();
+     //dlg->exec(); nicht modal Dialog
+    dlg->show(); // modal Dialog
 }
 
 ////////////////////////////////////////////////////////////////
@@ -627,6 +637,33 @@ bool ImageViewer::saveImage(const QString &fileName, int quality)
     if (fileName.isEmpty())
         return false;
     return image.isNull() ? image.save(fileName,nullptr,quality) : false;
+}
+
+void ImageViewer::changeFotoTest()
+{
+   QSize sizeImage = image.size();
+   double width = sizeImage.width();
+   double height = sizeImage.height();
+    int r,g,b, alpha = 0;
+    const QRgb red = 0;
+    //const QRgb red = 255;
+    for(int y = 0; y < height; y++) {
+        for(int x = 0; x < width; x++) {
+             QColor color = image.pixel(x,y);
+             color.getRgb(&r, &g, &b, &alpha);
+             r -= 10;
+             if(r <= 0)
+                 r=0;
+            color.setRgb(r,g,b,alpha);
+            image.setPixelColor(x,y,color);
+            /*color.getRgb(&r,&g,&b,&alpha);
+             * if (r == 0 && g == 0 && b == 0) {
+                cout << "Gelukt";
+                background.setPixel(x,y,Qt::blue);
+            }*/
+        }
+    }
+    setImage(image);
 }
 
 
@@ -761,3 +798,18 @@ void ImageViewer::on_action_Exit_triggered()
 
 
 
+
+void ImageViewer::on_action_New_triggered()
+{
+/*    if(!isModified())
+    {
+        return;
+        statusBar()->showMessage(tr("Save Your file"));
+    }
+    */
+    imageLabel->clear();
+    imageLabel->setBackgroundRole(QPalette::Dark);
+    image = QImage();
+    updateActions();
+    statusBar()->showMessage(tr("Open new file"));
+}
