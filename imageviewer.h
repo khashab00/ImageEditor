@@ -112,6 +112,7 @@ private:
     bool handleCloseChildWindow(QMdiSubWindow *subWindow);
     bool saveImage(const QString &fileName, int quality);
 
+    void applyYUV(float Y, float U,float V);
     void createKeyboardShortcuts();
 
     void changeFotoTest();
@@ -122,6 +123,7 @@ private:
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
+    QImage imagePreview;
 
     int zoomLevel = 100;
     double scaleFactor = 1.0;
@@ -129,6 +131,12 @@ private:
     QDialog *dlg = new Dialog();
 
     QString FileName;
+
+    // language stuff
+    QTranslator m_tranlator;
+    QTranslator m_tranlatorQt;
+    QString m_currLang;
+    QString m_langPath;
 
 
 #if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)

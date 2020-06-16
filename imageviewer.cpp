@@ -175,6 +175,70 @@ void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::Ac
        }
 }
 
+//void ImageViewer::loadLanguage(const QString& rLanguage)
+//{
+//    QLocale locale = QLocale(rLanguage);
+//    QLocale::setDefault(locale);
+//    QString languageName = QLocale::languageToString(locale.language());
+
+//    QString filename = QString("ImageEditor_%1.qm").arg(rLanguage);
+//    qApp->removeTranslator(&m_translator);
+//    if (m_translator.load(filename))
+//         qApp->installTranslator(&m_translator);
+
+//    filename = QString("qt_%1.qm").arg(rLanguage);
+//    qApp->removeTranslator(&m_translator);
+//    if(m_translatorQt.load(filename))
+//        qApp->installTranslator(&m_translatorQt);
+//}
+
+//void ImageViewer::on_action_Deutsch_triggered()
+//{
+//    loadLanguage("de");
+//    ui->action_Deutsch->setChecked(true);
+//    ui->action_English->setChecked(false);
+//}
+
+////////////////
+/// \brief ImageViewer::applyYUV
+/// \param Y
+/// \param U
+/// \param V
+///
+void ImageViewer::applyYUV(float Y, float U,float V)
+{
+    imagePreview = image;
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x < image.width(); ++x) {
+            QRgb rgb = image.pixel(x,y);
+            int R = qRed(rgb);
+            int G = qGreen(rgb);
+            int B = qBlue(rgb);
+
+            int currY =  0.299    * R +  0.587    * G +  0.114      * B;
+            int currU = -0.168736 * R + -0.331264 * G +  0.5        * B;
+            int currV =  0.5      * R + -0.418688 * G + -0.081312   * B;
+
+            float newY = Y * currY;
+            float newU = U * currU;
+            float newV = V * currV;
+
+//            int newR = clip(newY                      + 1.402 * newV);
+//            int newG = clip(newY + -0.344 *newU * -0.714      * newV);
+//            int newB = clip(newY + 1.772 * newU                     );
+
+//            imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
+
+        }
+    }
+    imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
+}
+
+
+
+
+
+
 ///////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Open_triggered()
