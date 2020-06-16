@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>334</height>
+    <width>356</width>
+    <height>319</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>100</horstretch>
+    <verstretch>100</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -21,6 +27,12 @@
      <width>161</width>
      <height>41</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -41,6 +53,15 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -56,6 +77,15 @@
      <width>160</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -73,6 +103,15 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -88,6 +127,18 @@
      <width>160</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>0</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -105,6 +156,18 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>-100</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -121,6 +184,18 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>-100</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -133,6 +208,12 @@
      <width>91</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
    </property>
    <property name="text">
     <string>Preview</string>
@@ -147,6 +228,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="text">
     <string>R</string>
    </property>
@@ -159,6 +246,12 @@
      <width>31</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
    </property>
    <property name="text">
     <string>G</string>
@@ -173,6 +266,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="text">
     <string>B</string>
    </property>
@@ -185,6 +284,12 @@
      <width>21</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
    </property>
    <property name="text">
     <string>Y</string>
@@ -199,6 +304,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="text">
     <string>U</string>
    </property>
@@ -212,68 +323,134 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="text">
     <string>V</string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox">
+  <widget class="QSpinBox" name="spinBox_R">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>40</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_2">
+  <widget class="QSpinBox" name="spinBox_G">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>70</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_3">
+  <widget class="QSpinBox" name="spinBox_B">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>100</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_4">
+  <widget class="QSpinBox" name="spinBox_Y">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>170</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>-100</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_5">
+  <widget class="QSpinBox" name="spinBox_U">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>200</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_6">
+  <widget class="QSpinBox" name="spinBox_V">
    <property name="geometry">
     <rect>
      <x>290</x>
      <y>230</y>
-     <width>42</width>
+     <width>50</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimum">
+    <number>-100</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
    </property>
   </widget>
   <widget class="QRadioButton" name="RGBradioButoon">
@@ -285,8 +462,17 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="text">
     <string>RGB</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QRadioButton" name="YUVradioButton">
@@ -297,6 +483,12 @@
      <width>63</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
    </property>
    <property name="text">
     <string>YUV</string>
@@ -316,8 +508,8 @@
      <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
+     <x>15</x>
+     <y>15</y>
     </hint>
    </hints>
   </connection>
@@ -332,8 +524,200 @@
      <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
+     <x>15</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>R</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_R</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_R</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>R</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>315</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>256</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>G</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_G</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_G</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>G</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>258</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>B</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_B</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_B</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>B</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>256</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Y</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_Y</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_Y</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>Y</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>185</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>182</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>U</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_U</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_U</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>U</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>V</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_V</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_V</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>V</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>245</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>244</y>
     </hint>
    </hints>
   </connection>
