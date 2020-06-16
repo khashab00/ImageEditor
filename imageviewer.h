@@ -112,7 +112,13 @@ private:
     bool handleCloseChildWindow(QMdiSubWindow *subWindow);
     bool saveImage(const QString &fileName, int quality);
 
+    // dialog sachen
+
     void applyYUV(float Y, float U,float V);
+    void applyRGB(float r, float g,float b);
+    void rejectChanges();
+    void acceptChanges();
+
     void createKeyboardShortcuts();
 
     void changeFotoTest();
@@ -131,7 +137,7 @@ private:
     QDialog *dlg = new Dialog();
 
     QString FileName;
-
+    //bool isModified;
     // language stuff
     QTranslator m_tranlator;
     QTranslator m_tranlatorQt;

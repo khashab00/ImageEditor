@@ -34,6 +34,13 @@ ImageViewer::ImageViewer(QWidget *parent)
     scrollArea->setVisible(false);
     scrollArea->setAcceptDrops(false);
 
+//     dialog = new Dialog(this);
+
+//    connect(dialog,&Dialog::rgbChanged, this,&ImageViewer::applyRGB);
+//    connect(dialog,&Dialog::yuvChanged, this,&ImageViewer::applyYUV);
+//    connect(dialog,&Dialog::rejected, this,&ImageViewer::rejectChanges);
+//    connect(dialog,&Dialog::accepted, this,&ImageViewer::acceptChanges);
+
     setCentralWidget(scrollArea);
 
     setAcceptDrops(true);
@@ -199,6 +206,23 @@ void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::Ac
 //    ui->action_English->setChecked(false);
 //}
 
+//void ImageViewer::on_action_English_triggered()
+//{
+//    loadLanguage("en");
+//    ui->action_Deutsch->setChecked(false);
+//    ui->action_English->setChecked(true);
+//}
+
+static int clip(float x)
+{
+    if (x<0)
+        return 0;
+    if(x > 255 )
+        return 255;
+    return static_cast<int>(x);
+}
+
+
 ////////////////
 /// \brief ImageViewer::applyYUV
 /// \param Y
@@ -223,21 +247,47 @@ void ImageViewer::applyYUV(float Y, float U,float V)
             float newU = U * currU;
             float newV = V * currV;
 
-//            int newR = clip(newY                      + 1.402 * newV);
-//            int newG = clip(newY + -0.344 *newU * -0.714      * newV);
-//            int newB = clip(newY + 1.772 * newU                     );
+              int newR = clip(newY                      + 1.402 * newV);
+              int newG = clip(newY + -0.344 *newU * -0.714      * newV);
+              int newB = clip(newY + 1.772 * newU                     );
 
-//            imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
+              imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
 
         }
     }
     imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
 }
 
+void ImageViewer::applyRGB(float r, float g,float b)
+{
+    imagePreview = image;
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x < image.width(); ++x) {
+            QRgb rgb = image.pixel(x,y);
+            int newR = r * qRed(rgb);
+            int newG = g * qGreen(rgb);
+            int newB = b * qBlue(rgb);
+            imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
+
+        }
+    }
+    imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
+    //setModified(true);
+}
 
 
 
+void ImageViewer::rejectChanges()
+{
+    imagePreview = image;
+    imageLabel->setPixmap(QPixmap::fromImage(image));
+}
 
+void ImageViewer::acceptChanges()
+{
+    image = imagePreview  ;
+    imageLabel->setPixmap(QPixmap::fromImage(image));
+}
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -891,3 +941,8 @@ void ImageViewer::on_action_New_triggered()
     updateActions();
     statusBar()->showMessage(tr("Open new file"));
 }
+
+//void ImageViewer::setModified(bool modified)
+//{
+//    this->isModified = modified;
+//}
