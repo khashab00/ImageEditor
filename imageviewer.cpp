@@ -52,6 +52,7 @@ ImageViewer::ImageViewer(QWidget *parent)
    // resize(QGuiApplication::primaryScreen()->availableSize() * 3 / 5);
 
    setCursor(Qt::ArrowCursor);
+
 }
 
 ////////////////////
