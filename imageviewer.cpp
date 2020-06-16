@@ -34,14 +34,13 @@ ImageViewer::ImageViewer(QWidget *parent)
     scrollArea->setVisible(false);
     scrollArea->setAcceptDrops(false);
 
-//     dialog = new Dialog(this);
+      dlg = new Dialog(this);
+      connect(dlg,&Dialog::rejected, this,&ImageViewer::rejectChanges);
+      connect(dlg,&Dialog::accepted, this,&ImageViewer::acceptChanges);
+    //  connect(dlg,&Dialog::rgbChanged, this,&ImageViewer::applyRGB);
+    //  connect(dlg,&Dialog::yuvChanged, this,&ImageViewer::applyYUV);
 
-//    connect(dialog,&Dialog::rgbChanged, this,&ImageViewer::applyRGB);
-//    connect(dialog,&Dialog::yuvChanged, this,&ImageViewer::applyYUV);
-//    connect(dialog,&Dialog::rejected, this,&ImageViewer::rejectChanges);
-//    connect(dialog,&Dialog::accepted, this,&ImageViewer::acceptChanges);
-
-    setCentralWidget(scrollArea);
+      setCentralWidget(scrollArea);
 
     setAcceptDrops(true);
     setWindowTitle(tr("Image Editor"));
@@ -773,7 +772,7 @@ void ImageViewer::changeFotoTest()
    double width = sizeImage.width();
    double height = sizeImage.height();
     int r,g,b, alpha = 0;
-    const QRgb red = 0;
+    // const QRgb red = 0;
     //const QRgb red = 255;
     for(int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {

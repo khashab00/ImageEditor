@@ -20,6 +20,10 @@ public:
     bool getIsRGBActive() const;
     void setIsRGBActive(bool value);
 
+signals:
+    void rgbChanged(float r, float g,float b);
+    void yuvChanged(float Y, float U,float V);
+
 private slots:
     void on_RGBradioButoon_clicked();
 

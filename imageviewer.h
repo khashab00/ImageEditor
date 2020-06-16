@@ -32,6 +32,9 @@ class ImageViewer : public QMainWindow
 public:
     ImageViewer(QWidget *parent = nullptr);
     bool loadFile(const QString &);
+    void applyYUV(float Y, float U,float V);
+    void applyRGB(float r, float g,float b);
+
 
 private slots:
     void on_action_Open_triggered();
@@ -114,8 +117,7 @@ private:
 
     // dialog sachen
 
-    void applyYUV(float Y, float U,float V);
-    void applyRGB(float r, float g,float b);
+
     void rejectChanges();
     void acceptChanges();
 
