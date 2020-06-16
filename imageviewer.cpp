@@ -158,11 +158,20 @@ void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::Ac
     QStringList nameFilters = dialog.nameFilters();
     nameFilters.append(allSupportedFormatsFilter);
     dialog.setNameFilters(nameFilters);
-    dialog.selectNameFilter(allSupportedFormatsFilter);
+    if(acceptMode == QFileDialog::AcceptOpen)
+        dialog.selectNameFilter(allSupportedFormatsFilter);
     if (acceptMode == QFileDialog::AcceptSave)
        {
             dialog.setAcceptMode(acceptMode);
-            dialog.setDefaultSuffix("jpg");
+            QMimeType type = QMimeDatabase().mimeTypeForFile(FileName, QMimeDatabase::MatchContent);
+            QFileInfo fi(FileName);
+            QString ext = fi.suffix();  // ext = "jpg"
+            dialog.setDefaultSuffix(mimeTypeFilters[3]);
+            QStringList result = dialog.nameFilters().filter("*."+ext.toLower());
+            if (result.length()> 0)
+                dialog.selectNameFilter(result[0]);
+            else
+                dialog.selectNameFilter(allSupportedFormatsFilter);
        }
 }
 
@@ -174,6 +183,7 @@ void ImageViewer::on_action_Open_triggered()
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
     while (dialog.exec() ==
            QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {
+        FileName = dialog.selectedFiles()[0];
         if(dialog.selectedFiles().length()>0)
         {
             for(int i=0;i<dialog.selectedFiles().length();i++)
@@ -234,7 +244,7 @@ QString ImageViewer::prepareFile(const QString& fileName)
         newFileName = "";
         showError(tr("Please open a valid image file"));
     }
-
+    FileName = newFileName;
     return newFileName;
 }
 

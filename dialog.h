@@ -25,6 +25,8 @@ private slots:
 
     void on_YUVradioButton_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Dialog *ui;
     bool isRGBActive;

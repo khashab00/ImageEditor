@@ -102,7 +102,7 @@ private:
     void updateRecentFilesMenu();
     QString prepareFile(const QString& fileName);
     bool fileTypeSupported(QList<QByteArray> formats, QString ext);
-    static void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
+    void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);
 
     void closeEvent(QCloseEvent *event);
     void saveGeometryState(QCloseEvent *event);

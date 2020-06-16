@@ -54,3 +54,8 @@ void Dialog::on_YUVradioButton_clicked()
 {
     sliderActivation(false);
 }
+
+void Dialog::on_pushButton_clicked()
+{
+
+}
