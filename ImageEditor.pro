@@ -31,8 +31,9 @@ HEADERS += \
 FORMS += \
     dialog.ui \
     imageviewer.ui
-TRANSLATIONS = languages/ImageEditor_en.ts  languages/ImageEditor_de.ts
-
+TRANSLATIONS = languages/ImageEditor_en.ts \
+               languages/ImageEditor_de.ts
+CODECFORSRC     = UTF-8
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

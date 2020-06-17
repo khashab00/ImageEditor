@@ -248,7 +248,7 @@
     </message>
     <message>
         <location filename="../imageviewer.ui" line="352"/>
-        <location filename="../imageviewer.cpp" line="969"/>
+        <location filename="../imageviewer.cpp" line="970"/>
         <source>Dark Mood</source>
         <translation>Dark Mood</translation>
     </message>
@@ -268,130 +268,130 @@
         <translation>Image Editor</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="67"/>
+        <location filename="../imageviewer.cpp" line="68"/>
         <source>open file location</source>
         <translation>open file location</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="91"/>
+        <location filename="../imageviewer.cpp" line="92"/>
         <source>Image does not exist at this file path</source>
         <translation>Image does not exist at this file path</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="107"/>
+        <location filename="../imageviewer.cpp" line="108"/>
         <source>Cannot load %1: %2</source>
         <translation>Cannot load %1: %2</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="117"/>
+        <location filename="../imageviewer.cpp" line="118"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="119"/>
+        <location filename="../imageviewer.cpp" line="120"/>
         <source>Opened &quot;%1&quot;, %2x%3, Depth: %4</source>
         <translation>Opened &quot;%1&quot;, %2x%3, Depth: %4</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="282"/>
+        <location filename="../imageviewer.cpp" line="283"/>
         <source>Open File</source>
         <translation>Open File</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="327"/>
+        <location filename="../imageviewer.cpp" line="328"/>
         <source>Incorrect file extension detected</source>
         <translation>Incorrect file extension detected</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="328"/>
+        <location filename="../imageviewer.cpp" line="329"/>
         <source>Do you want to update this extension?</source>
         <translation>Do you want to update this extension?</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="345"/>
+        <location filename="../imageviewer.cpp" line="346"/>
         <source>Please open a valid image file</source>
         <translation>Please open a valid image file</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="392"/>
+        <location filename="../imageviewer.cpp" line="393"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="435"/>
+        <location filename="../imageviewer.cpp" line="436"/>
         <source>Cannot write %1: %2</source>
         <translation>Cannot write %1: %2</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="439"/>
+        <location filename="../imageviewer.cpp" line="440"/>
         <source>Wrote &quot;%1&quot;</source>
         <translation>Wrote &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="591"/>
-        <location filename="../imageviewer.cpp" line="606"/>
-        <location filename="../imageviewer.cpp" line="620"/>
+        <location filename="../imageviewer.cpp" line="592"/>
+        <location filename="../imageviewer.cpp" line="607"/>
+        <location filename="../imageviewer.cpp" line="621"/>
         <source>Zoom Level: </source>
         <translation>Zoom Level: </translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="596"/>
-        <location filename="../imageviewer.cpp" line="611"/>
+        <location filename="../imageviewer.cpp" line="597"/>
+        <location filename="../imageviewer.cpp" line="612"/>
         <source>Load an Image</source>
         <translation>Load an Image</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="651"/>
+        <location filename="../imageviewer.cpp" line="652"/>
         <source>Save File As</source>
         <translation>Save File As</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="688"/>
+        <location filename="../imageviewer.cpp" line="689"/>
         <source>No image in clipboard</source>
         <translation>No image in clipboard</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="692"/>
+        <location filename="../imageviewer.cpp" line="693"/>
         <source>Obtained image from clipboard, %1x%2, Depth: %3</source>
         <translation>Obtained image from clipboard, %1x%2, Depth: %3</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="702"/>
+        <location filename="../imageviewer.cpp" line="703"/>
         <source>About Image Editor</source>
         <translation>About Image Editor</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="703"/>
+        <location filename="../imageviewer.cpp" line="704"/>
         <source>&lt;p&gt;The &lt;b&gt;Image Editor&lt;/b&gt; project is part of the course software development in HTW&lt;/p&gt;&lt;p&gt;The project demonstrates how QLabel&apos;s ability to scale its contents (QLabel::scaledContents), and QScrollArea&apos;s ability to automatically resize its contents (QScrollArea::widgetResizable), can be used to implement zooming and scaling features. &lt;/p&gt;&lt;p&gt;In addition the project shows how to use QPainter to print an image and QDialog to show a dialog.&lt;/p&gt;</source>
         <translation>&lt;p&gt;The &lt;b&gt;Image Editor&lt;/b&gt; project is part of the course software development in HTW&lt;/p&gt;&lt;p&gt;The project demonstrates how QLabel&apos;s ability to scale its contents (QLabel::scaledContents), and QScrollArea&apos;s ability to automatically resize its contents (QScrollArea::widgetResizable), can be used to implement zooming and scaling features. &lt;/p&gt;&lt;p&gt;In addition the project shows how to use QPainter to print an image and QDialog to show a dialog.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="727"/>
+        <location filename="../imageviewer.cpp" line="728"/>
         <source>About Qt</source>
         <translation>About Qt</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="728"/>
+        <location filename="../imageviewer.cpp" line="729"/>
         <source>&lt;p&gt;The &lt;b&gt;Qt Creator 5.13.1&lt;/b&gt; Built on Oct 4 2019 01:16:32 From revision ea829fa6d5 Copyright 2008-2019 The Qt Company Ltd. All rights reserved. Copyright 2008-2019 The Qt Company Ltd. All rights reserved. The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN,MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.&lt;/p&gt;</source>
         <translation>&lt;p&gt;The &lt;b&gt;Qt Creator 5.13.1&lt;/b&gt; Built on Oct 4 2019 01:16:32 From revision ea829fa6d5 Copyright 2008-2019 The Qt Company Ltd. All rights reserved. Copyright 2008-2019 The Qt Company Ltd. All rights reserved. The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN,MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="820"/>
+        <location filename="../imageviewer.cpp" line="821"/>
         <source>Unsaved Changes</source>
         <translation>Unsaved Changes</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="820"/>
+        <location filename="../imageviewer.cpp" line="821"/>
         <source>Save changes before leaving?</source>
         <translation>Save changes before leaving?</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="939"/>
+        <location filename="../imageviewer.cpp" line="940"/>
         <source>Open new file</source>
         <translation>Open new file</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="962"/>
+        <location filename="../imageviewer.cpp" line="963"/>
         <source>Normal Mood</source>
         <translation>Normal Mood</translation>
     </message>

@@ -59,12 +59,12 @@
     <message>
         <location filename="../imageviewer.ui" line="14"/>
         <source>ImageViewer</source>
-        <translation>Bildanzeiger</translation>
+        <translation>ImageViewer</translation>
     </message>
     <message>
         <location filename="../imageviewer.ui" line="52"/>
         <source>TextLabel</source>
-        <translation>Etikettentext</translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../imageviewer.ui" line="69"/>
@@ -248,7 +248,7 @@
     </message>
     <message>
         <location filename="../imageviewer.ui" line="352"/>
-        <location filename="../imageviewer.cpp" line="969"/>
+        <location filename="../imageviewer.cpp" line="970"/>
         <source>Dark Mood</source>
         <translation>Dunkler Mod</translation>
     </message>
@@ -268,130 +268,130 @@
         <translation>Bild-Editor</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="67"/>
+        <location filename="../imageviewer.cpp" line="68"/>
         <source>open file location</source>
         <translation>Speicherort der Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="91"/>
+        <location filename="../imageviewer.cpp" line="92"/>
         <source>Image does not exist at this file path</source>
         <translation>Bild existiert nicht in diesem Dateipfad</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="107"/>
+        <location filename="../imageviewer.cpp" line="108"/>
         <source>Cannot load %1: %2</source>
         <translation>Kann nicht beladen werden %1: %2</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="117"/>
+        <location filename="../imageviewer.cpp" line="118"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="119"/>
+        <location filename="../imageviewer.cpp" line="120"/>
         <source>Opened &quot;%1&quot;, %2x%3, Depth: %4</source>
         <translation>Geöffnet &quot;%1&quot;, %2x%3, Tiefe: %4</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="282"/>
+        <location filename="../imageviewer.cpp" line="283"/>
         <source>Open File</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="327"/>
+        <location filename="../imageviewer.cpp" line="328"/>
         <source>Incorrect file extension detected</source>
         <translation>Falsche Dateierweiterung entdeckt</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="328"/>
+        <location filename="../imageviewer.cpp" line="329"/>
         <source>Do you want to update this extension?</source>
         <translation>Möchten Sie diese Erweiterung aktualisieren?</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="345"/>
+        <location filename="../imageviewer.cpp" line="346"/>
         <source>Please open a valid image file</source>
         <translation>Bitte öffnen Sie eine gültige Bilddatei</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="392"/>
+        <location filename="../imageviewer.cpp" line="393"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="435"/>
+        <location filename="../imageviewer.cpp" line="436"/>
         <source>Cannot write %1: %2</source>
         <translation>Kann nicht schreiben %1: %2</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="439"/>
+        <location filename="../imageviewer.cpp" line="440"/>
         <source>Wrote &quot;%1&quot;</source>
         <translation>Schrieb &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="591"/>
-        <location filename="../imageviewer.cpp" line="606"/>
-        <location filename="../imageviewer.cpp" line="620"/>
+        <location filename="../imageviewer.cpp" line="592"/>
+        <location filename="../imageviewer.cpp" line="607"/>
+        <location filename="../imageviewer.cpp" line="621"/>
         <source>Zoom Level: </source>
         <translation>Zoomstufe: </translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="596"/>
-        <location filename="../imageviewer.cpp" line="611"/>
+        <location filename="../imageviewer.cpp" line="597"/>
+        <location filename="../imageviewer.cpp" line="612"/>
         <source>Load an Image</source>
         <translation>Ein Bild laden</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="651"/>
+        <location filename="../imageviewer.cpp" line="652"/>
         <source>Save File As</source>
         <translation>Datei speichern unter</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="688"/>
+        <location filename="../imageviewer.cpp" line="689"/>
         <source>No image in clipboard</source>
         <translation>Kein Bild in der Zwischenablage</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="692"/>
+        <location filename="../imageviewer.cpp" line="693"/>
         <source>Obtained image from clipboard, %1x%2, Depth: %3</source>
         <translation>Aus der Zwischenablage erhaltenes Bild, %1x%2, Tiefe: %3</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="702"/>
+        <location filename="../imageviewer.cpp" line="703"/>
         <source>About Image Editor</source>
         <translation>Über Image Editor</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="703"/>
+        <location filename="../imageviewer.cpp" line="704"/>
         <source>&lt;p&gt;The &lt;b&gt;Image Editor&lt;/b&gt; project is part of the course software development in HTW&lt;/p&gt;&lt;p&gt;The project demonstrates how QLabel&apos;s ability to scale its contents (QLabel::scaledContents), and QScrollArea&apos;s ability to automatically resize its contents (QScrollArea::widgetResizable), can be used to implement zooming and scaling features. &lt;/p&gt;&lt;p&gt;In addition the project shows how to use QPainter to print an image and QDialog to show a dialog.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Das Projekt &lt;b&gt;Bildeditor&lt;/b&gt; ist Teil der Software-Entwicklung des Kurses in HTW&lt;/p&gt;&lt;p&gt;Das Projekt demonstriert, wie die Fähigkeit von QLabel, seinen Inhalt zu skalieren (QLabel::scaledContents), und die Fähigkeit von QScrollArea, seinen Inhalt automatisch anzupassen (QScrollArea::widgetResizable), zur Implementierung von Zoom- und Skalierungsfunktionen verwendet werden können. &lt;/p&gt;&lt;&lt;p&gt; Zusätzlich zeigt das Projekt, wie man QPainter zum Drucken eines Bildes und QDialog zum Zeigen eines Dialogs verwendet.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="727"/>
+        <location filename="../imageviewer.cpp" line="728"/>
         <source>About Qt</source>
         <translation>Über Qt</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="728"/>
+        <location filename="../imageviewer.cpp" line="729"/>
         <source>&lt;p&gt;The &lt;b&gt;Qt Creator 5.13.1&lt;/b&gt; Built on Oct 4 2019 01:16:32 From revision ea829fa6d5 Copyright 2008-2019 The Qt Company Ltd. All rights reserved. Copyright 2008-2019 The Qt Company Ltd. All rights reserved. The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY OF DESIGN,MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.&lt;/p&gt;</source>
         <translation>&lt;p&gt; Der &lt;b&gt;Qt Creator 5.13.1&lt;/b&gt; Erbaut am 4. Oktober 2019 01:16:32 Aus Überarbeitung ea829fa6d5 Copyright 2008-2019 The Qt Company Ltd. Alle Rechte vorbehalten. Urheberrecht 2008-2019 The Qt Company Ltd. Alle Rechte vorbehalten. Das Programm wird OHNE GEWÄHRLEISTUNG JEGLICHER ART zur Verfügung gestellt, EINSCHLIESSLICH DER GEWÄHRLEISTUNG DER GESTALTUNG, MARKTGÄNGIGKEIT UND EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="820"/>
+        <location filename="../imageviewer.cpp" line="821"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="820"/>
+        <location filename="../imageviewer.cpp" line="821"/>
         <source>Save changes before leaving?</source>
         <translation>Änderungen vor dem Verlassen speichern?</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="939"/>
+        <location filename="../imageviewer.cpp" line="940"/>
         <source>Open new file</source>
         <translation>Neue Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../imageviewer.cpp" line="962"/>
+        <location filename="../imageviewer.cpp" line="963"/>
         <source>Normal Mood</source>
         <translation>Normale Mod</translation>
     </message>

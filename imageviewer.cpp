@@ -983,18 +983,17 @@ void ImageViewer::loadLanguage(const QString& rLanguage)
 {
     QLocale locale = QLocale(rLanguage);
     QLocale::setDefault(locale);
-    qApp->removeTranslator(&m_translator);
     QString languageName = QLocale::languageToString(locale.language());
     QString path = QApplication::applicationDirPath();
-    QString filename = QString("ImageEditor_%1.qm").arg(rLanguage);
+    QString filename = QString("/ImageEditor_%1.qm").arg(rLanguage);
     qApp->removeTranslator(&m_translator);
-    if (m_translator.load(filename))
+    if (m_translator.load(path+filename))
          qApp->installTranslator(&m_translator);
 
-    filename = QString("qt_%1.qm").arg(rLanguage);
-    qApp->removeTranslator(&m_translator);
-    if(m_translatorQt.load(filename))
-        qApp->installTranslator(&m_translatorQt);
+//    filename = QString("/qt_%1.qm").arg(rLanguage);
+//    qApp->removeTranslator(&m_translatorQt);
+//    if(m_translatorQt.load(path+filename))
+//        qApp->installTranslator(&m_translatorQt);
 }
 
 void ImageViewer::on_actionGerman_triggered()
@@ -1024,8 +1023,8 @@ void ImageViewer::createLanguageMenu(void)
      for (int i = 0; i < fileNames.size(); ++i) {
       // get locale extracted by filename
       QString locale;
-      locale = fileNames[i]; // "TranslationExample_de.qm"
-      locale.truncate(locale.lastIndexOf('.')); // "TranslationExample_de"
+      locale = fileNames[i]; // "ImageEditor_de.qm"
+      locale.truncate(locale.lastIndexOf('.')); // "ImageEditor_de"
       locale.remove(0, locale.indexOf('_') + 1); // "de"
 
      QString lang = QLocale::languageToString(QLocale(locale).language());
@@ -1045,6 +1044,7 @@ void ImageViewer::createLanguageMenu(void)
 void ImageViewer::changeEvent(QEvent* event)
 {
  if(0 != event) {
+     try {
   switch(event->type()) {
    // this event is send if a translator is loaded
    case QEvent::LanguageChange:
@@ -1059,7 +1059,13 @@ void ImageViewer::changeEvent(QEvent* event)
     loadLanguage(locale);
    }
    break;
+  default:
+      break;
   }
+     } catch (QException e) {
+         QErrorMessage* q= new QErrorMessage(this);
+         q->showMessage(e.what());
+     }
  }
  QMainWindow::changeEvent(event);
 }
