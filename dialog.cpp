@@ -92,6 +92,7 @@ void Dialog::on_YUVradioButton_clicked()
 
 void Dialog::on_pushButton_clicked()
 {
+    rgbChanged(ui->R->value(), ui->G->value(),ui->B->value());
 
 }
 

@@ -14,14 +14,15 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
-
+int r,g,b;
+int getR(){return r;}
     void sliderActivation(bool isRGBActive);
 
     bool getIsRGBActive() const;
     void setIsRGBActive(bool value);
 
 signals:
-    void rgbChanged(float r, float g,float b);
+    void rgbChanged(float , float ,float );
     void yuvChanged(float Y, float U,float V);
 
 private slots:
@@ -34,6 +35,7 @@ private slots:
 private:
     Ui::Dialog *ui;
     bool isRGBActive;
+
 };
 
 #endif // DIALOG_H

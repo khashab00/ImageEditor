@@ -722,4 +722,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <signal>rgbChanged(float,float,float)</signal>
+ </slots>
 </ui>

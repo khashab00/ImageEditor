@@ -37,8 +37,8 @@ ImageViewer::ImageViewer(QWidget *parent)
       dlg = new Dialog(this);
       connect(dlg,&Dialog::rejected, this,&ImageViewer::rejectChanges);
       connect(dlg,&Dialog::accepted, this,&ImageViewer::acceptChanges);
-    //  connect(dlg,&Dialog::rgbChanged, this,&ImageViewer::applyRGB);
-    //  connect(dlg,&Dialog::yuvChanged, this,&ImageViewer::applyYUV);
+      connect(dlg,&Dialog::rgbChanged, this,&ImageViewer::applyRGB);
+      connect(dlg,&Dialog::yuvChanged, this,&ImageViewer::applyYUV);
 
       setCentralWidget(scrollArea);
 
