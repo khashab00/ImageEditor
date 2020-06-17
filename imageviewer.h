@@ -19,8 +19,6 @@
 #include "Settings.h"
 #include "dialog.h"
 
-#include"dialog.h"
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class ImageViewer; }
 QT_END_NAMESPACE
@@ -32,11 +30,15 @@ class ImageViewer : public QMainWindow
 public:
     ImageViewer(QWidget *parent = nullptr);
     bool loadFile(const QString &);
+
+public slots:
     void applyYUV(float Y, float U,float V);
     void applyRGB(float r, float g,float b);
-
+    void rejectChanges();
+    void acceptChanges();
 
 private slots:
+
     void on_action_Open_triggered();
 
     void on_action_Print_triggered();
@@ -118,8 +120,7 @@ private:
     // dialog sachen
 
 
-    void rejectChanges();
-    void acceptChanges();
+
 
     void createKeyboardShortcuts();
 
@@ -136,7 +137,7 @@ private:
     int zoomLevel = 100;
     double scaleFactor = 1.0;
 
-    QDialog *dlg = new Dialog();
+    Dialog *dlg = new Dialog();
 
     QString FileName;
     //bool isModified;

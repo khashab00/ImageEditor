@@ -20,7 +20,7 @@ public:
     bool getIsRGBActive() const;
     void setIsRGBActive(bool value);
 
-signals:
+Q_SIGNALS:
     void rgbChanged(float r, float g,float b);
     void yuvChanged(float Y, float U,float V);
 
@@ -30,6 +30,8 @@ private slots:
     void on_YUVradioButton_clicked();
 
     void on_pushButton_clicked();
+
+    void on_R_actionTriggered(int action);
 
 private:
     Ui::Dialog *ui;

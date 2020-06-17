@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>356</width>
-    <height>319</height>
+    <width>414</width>
+    <height>355</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -722,4 +722,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <signal>rgbChanged(float,float,float)</signal>
+ </slots>
 </ui>

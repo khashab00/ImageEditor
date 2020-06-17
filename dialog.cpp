@@ -95,3 +95,8 @@ void Dialog::on_pushButton_clicked()
 
 }
 
+
+void Dialog::on_R_actionTriggered(int action)
+{
+    rgbChanged(action,ui->G->value(),ui->B->value());
+}
