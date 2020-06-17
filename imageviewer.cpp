@@ -188,37 +188,11 @@ void ImageViewer::initializeImageFileDialog(QFileDialog &dialog, QFileDialog::Ac
        }
 }
 
-//void ImageViewer::loadLanguage(const QString& rLanguage)
-//{
-//    QLocale locale = QLocale(rLanguage);
-//    QLocale::setDefault(locale);
-//    QString languageName = QLocale::languageToString(locale.language());
-
-//    QString filename = QString("ImageEditor_%1.qm").arg(rLanguage);
-//    qApp->removeTranslator(&m_translator);
-//    if (m_translator.load(filename))
-//         qApp->installTranslator(&m_translator);
-
-//    filename = QString("qt_%1.qm").arg(rLanguage);
-//    qApp->removeTranslator(&m_translator);
-//    if(m_translatorQt.load(filename))
-//        qApp->installTranslator(&m_translatorQt);
-//}
-
-//void ImageViewer::on_action_Deutsch_triggered()
-//{
-//    loadLanguage("de");
-//    ui->action_Deutsch->setChecked(true);
-//    ui->action_English->setChecked(false);
-//}
-
-//void ImageViewer::on_action_English_triggered()
-//{
-//    loadLanguage("en");
-//    ui->action_Deutsch->setChecked(false);
-//    ui->action_English->setChecked(true);
-//}
-
+/////////////////
+/// \brief clip
+/// \param x
+/// \return
+///
 static int clip(float x)
 {
     if (x<0)
@@ -227,7 +201,6 @@ static int clip(float x)
         return 255;
     return static_cast<int>(x);
 }
-
 
 ////////////////
 /// \brief ImageViewer::applyYUV
@@ -899,8 +872,8 @@ void ImageViewer::saveGeometryState(QCloseEvent *event)
         SETTINGS->settings = new QSettings ("Aazrak", "ImageEditor");
         SETTINGS->settings->setValue("geometry", saveGeometry());
         SETTINGS->settings->setValue("windowState", saveState());
-        SETTINGS->settings->setValue( "pos", pos() );
-        SETTINGS->settings->setValue( "size", size() );
+        SETTINGS->settings->setValue("pos", pos() );
+        SETTINGS->settings->setValue("size", size() );
 
 
         QMainWindow::saveState();
@@ -935,7 +908,7 @@ void ImageViewer::on_actionQuit_triggered()
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::on_actionClose_triggered()
 {
-   // handleCloseChildWindow(ui->centralwidget->currentSubWindow());
+   //    handleCloseChildWindow(ui->centralwidget->currentSubWindow());
 }
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::on_actionClose_all_triggered()
@@ -966,10 +939,10 @@ void ImageViewer::on_action_New_triggered()
     statusBar()->showMessage(tr("Open new file"));
 }
 
-//void ImageViewer::setModified(bool modified)
-//{
-//    this->isModified = modified;
-//}
+void ImageViewer::setModified(bool modified)
+{
+    this->isModified = modified;
+}
 
 void ImageViewer::on_action_Dark_Mood_triggered()
 {
@@ -986,14 +959,14 @@ void ImageViewer::on_action_Dark_Mood_triggered()
             qApp->setStyleSheet(ts.readAll());
         }
        isDarkmood = true;
-       ui->menu_View->actions().last()->setText("Normal Mood");
+       ui->menu_View->actions().last()->setText(tr("Normal Mood"));
        ui->menu_View->actions().last()->setIcon(QIcon(":/images/images/Solid_gray.png"));
        return;
     }
     else
     {
         isDarkmood = false;
-        ui->menu_View->actions().last()->setText("Dark Mood");
+        ui->menu_View->actions().last()->setText(tr("Dark Mood"));
         ui->menu_View->actions().last()->setIcon(QIcon(":/images/images/pixmaps/logo.svg"));
         QQuickStyle::setStyle("Default");
         QQuickStyle::setFallbackStyle("Material");
@@ -1003,4 +976,31 @@ void ImageViewer::on_action_Dark_Mood_triggered()
         return;
 
     }
+}
+
+void ImageViewer::loadLanguage(const QString& rLanguage)
+{
+    QLocale locale = QLocale(rLanguage);
+    QLocale::setDefault(locale);
+    QString languageName = QLocale::languageToString(locale.language());
+
+    QString filename = QString("ImageEditor_%1.qm").arg(rLanguage);
+    qApp->removeTranslator(&m_translator);
+    if (m_translator.load(filename))
+         qApp->installTranslator(&m_translator);
+
+    filename = QString("qt_%1.qm").arg(rLanguage);
+    qApp->removeTranslator(&m_translator);
+    if(m_translatorQt.load(filename))
+            qApp->installTranslator(&m_translatorQt);
+}
+
+void ImageViewer::on_actionGerman_triggered()
+{
+        loadLanguage("de");
+}
+
+void ImageViewer::on_actionEnglish_triggered()
+{
+        loadLanguage("en");
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>283</height>
+    <width>552</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>447</width>
+     <width>552</width>
      <height>21</height>
     </rect>
    </property>
@@ -96,12 +96,20 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <addaction name="actionGerman"/>
+     <addaction name="actionEnglish"/>
+    </widget>
     <addaction name="action_Zoom_in"/>
     <addaction name="action_Zoom_out"/>
     <addaction name="action_Zoom_100"/>
     <addaction name="action_Fit_to_Window"/>
     <addaction name="action_Show_Dialog"/>
     <addaction name="separator"/>
+    <addaction name="menuLanguage"/>
     <addaction name="action_Dark_Mood"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -139,12 +147,15 @@
    <addaction name="action_Zoom_100"/>
    <addaction name="action_Zoom_in"/>
    <addaction name="action_Zoom_out"/>
+   <addaction name="action_Fit_to_Window"/>
    <addaction name="separator"/>
    <addaction name="action_Dark_Mood"/>
+   <addaction name="actionGerman"/>
+   <addaction name="actionEnglish"/>
   </widget>
   <action name="action_Open">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/open.png</normaloff>:/images/images/open.png</iconset>
    </property>
    <property name="text">
@@ -156,7 +167,7 @@
   </action>
   <action name="action_Save">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset resource="../../../Downloads/Qt_Oliver_Koepp/projekt_label/projekt_image_manipulator/resources.qrc">
      <normaloff>:/images/images/save.png</normaloff>:/images/images/save.png</iconset>
    </property>
    <property name="text">
@@ -168,7 +179,7 @@
   </action>
   <action name="action_Save_as">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset resource="../../../Downloads/Qt_Oliver_Koepp/projekt_label/projekt_image_manipulator/resources.qrc">
      <normaloff>:/images/images/save_as.png</normaloff>:/images/images/save_as.png</iconset>
    </property>
    <property name="text">
@@ -180,7 +191,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/print.png</normaloff>:/images/images/print.png</iconset>
    </property>
    <property name="text">
@@ -192,7 +203,7 @@
   </action>
   <action name="action_Exit">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset resource="../../../Downloads/Qt_Oliver_Koepp/projekt_label/projekt_image_manipulator/resources.qrc">
      <normaloff>:/images/images/exit.png</normaloff>:/images/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -204,7 +215,7 @@
   </action>
   <action name="action_Copy">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/copy.png</normaloff>:/images/images/copy.png</iconset>
    </property>
    <property name="text">
@@ -216,7 +227,7 @@
   </action>
   <action name="action_Paste">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/paste.png</normaloff>:/images/images/paste.png</iconset>
    </property>
    <property name="text">
@@ -228,7 +239,7 @@
   </action>
   <action name="action_Zoom_in">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/zoom-png-1.png</normaloff>:/images/images/zoom-png-1.png</iconset>
    </property>
    <property name="text">
@@ -240,7 +251,7 @@
   </action>
   <action name="action_Zoom_out">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/zoomout.png</normaloff>:/images/images/zoomout.png</iconset>
    </property>
    <property name="text">
@@ -252,7 +263,7 @@
   </action>
   <action name="action_Zoom_100">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/zoom.png</normaloff>:/images/images/zoom.png</iconset>
    </property>
    <property name="text">
@@ -269,6 +280,10 @@
    <property name="checked">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/fit.png</normaloff>images/fit.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Fit to Window</string>
    </property>
@@ -283,7 +298,7 @@
   </action>
   <action name="action_About">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/info.png</normaloff>:/images/images/info.png</iconset>
    </property>
    <property name="text">
@@ -292,7 +307,7 @@
   </action>
   <action name="action_About_Qt">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/info.png</normaloff>:/images/images/info.png</iconset>
    </property>
    <property name="text">
@@ -301,7 +316,7 @@
   </action>
   <action name="action_New">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/new.png</normaloff>:/images/images/new.png</iconset>
    </property>
    <property name="text">
@@ -313,7 +328,7 @@
   </action>
   <action name="action_Cut">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset resource="../../../Downloads/Qt_Oliver_Koepp/projekt_label/projekt_image_manipulator/resources.qrc">
      <normaloff>:/images/images/cut.png</normaloff>:/images/images/cut.png</iconset>
    </property>
    <property name="text">
@@ -330,16 +345,32 @@
   </action>
   <action name="action_Dark_Mood">
    <property name="icon">
-    <iconset resource="ressources.qrc">
+    <iconset>
      <normaloff>:/images/images/pixmaps/logo.svg</normaloff>:/images/images/pixmaps/logo.svg</iconset>
    </property>
    <property name="text">
     <string>Dark Mood</string>
    </property>
   </action>
+  <action name="actionGerman">
+   <property name="icon">
+    <iconset>
+     <normaloff>images/de.png</normaloff>images/de.png</iconset>
+   </property>
+   <property name="text">
+    <string>German</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="icon">
+    <iconset>
+     <normaloff>images/en.png</normaloff>images/en.png</iconset>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
  </widget>
- <resources>
-  <include location="ressources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

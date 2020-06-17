@@ -24,5 +24,8 @@
         <file>images/pixmaps/logo.png</file>
         <file>images/pixmaps/logo.svg</file>
         <file>images/Solid_gray.png</file>
+        <file>images/fit.png</file>
+        <file>images/de.png</file>
+        <file>images/en.png</file>
     </qresource>
 </RCC>

@@ -79,8 +79,12 @@ private slots:
 
     void updateRecentFilesMenu();
 
+    void on_actionGerman_triggered();
+
+    void on_actionEnglish_triggered();
+
 signals:
-    bool isModified();
+   //    bool isModified();
 
 private:
     void updateActions();
@@ -88,7 +92,7 @@ private:
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
     bool saveFile(const QString &fileName);
-
+    void setModified(bool modified);
     // for drag and drop implementation
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
@@ -120,8 +124,8 @@ private:
     bool handleCloseChildWindow(QMdiSubWindow *subWindow);
     bool saveImage(const QString &fileName, int quality);
 
-    // dialog sachen
 
+    void loadLanguage(const QString& rLanguage);
 
 
 
@@ -143,10 +147,10 @@ private:
     Dialog *dlg = new Dialog();
 
     QString FileName;
-    //bool isModified;
+    bool isModified;
     // language stuff
-    QTranslator m_tranlator;
-    QTranslator m_tranlatorQt;
+    QTranslator m_translator;
+    QTranslator m_translatorQt;
     QString m_currLang;
     QString m_langPath;
     bool isDarkmood=false;

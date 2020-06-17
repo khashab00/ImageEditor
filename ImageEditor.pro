@@ -32,7 +32,9 @@ FORMS += \
     dialog.ui \
     imageviewer.ui
 TRANSLATIONS += \
-    ImageEditor_de_DE.ts
+    languages/ImageEditor_de.ts \
+    languages/ImageEditor_en.ts
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
