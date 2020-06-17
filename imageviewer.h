@@ -77,6 +77,8 @@ private slots:
 
     void on_action_Dark_Mood_triggered();
 
+    void updateRecentFilesMenu();
+
 signals:
     bool isModified();
 
@@ -106,7 +108,6 @@ private:
 
     void showError(const QString &message);
     bool fileExists(QString path);
-    void updateRecentFilesMenu();
     QString prepareFile(const QString& fileName);
     bool fileTypeSupported(QList<QByteArray> formats, QString ext);
     void initializeImageFileDialog(QFileDialog &dialog, QFileDialog::AcceptMode acceptMode);

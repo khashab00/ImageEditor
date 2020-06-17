@@ -54,6 +54,9 @@ ImageViewer::ImageViewer(QWidget *parent)
 
    setCursor(Qt::ArrowCursor);
 
+   // Update recents
+   updateRecentFilesMenu();
+
 }
 
 ////////////////////
@@ -119,6 +122,8 @@ bool ImageViewer::loadFile(const QString &fileName)
                                         arg(image.height()).
                                         arg(image.depth());
              statusBar()->showMessage(message);
+             SETTINGS->addRecentFile(updatedFileName);
+             updateRecentFilesMenu();
              return true;
         }
     }
@@ -258,7 +263,12 @@ void ImageViewer::applyYUV(float Y, float U,float V)
     }
     imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
 }
-
+//////////////////////////
+/// \brief ImageViewer::applyRGB
+/// \param r
+/// \param g
+/// \param b
+///
 void ImageViewer::applyRGB(float r, float g,float b)
 {
     imagePreview = image;
@@ -275,15 +285,17 @@ void ImageViewer::applyRGB(float r, float g,float b)
     imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
     //setModified(true);
 }
-
-
-
+//////////////
+/// \brief ImageViewer::rejectChanges
+///
 void ImageViewer::rejectChanges()
 {
     imagePreview = image;
     imageLabel->setPixmap(QPixmap::fromImage(image));
 }
-
+////////////////
+/// \brief ImageViewer::acceptChanges
+///
 void ImageViewer::acceptChanges()
 {
     image = imagePreview  ;
@@ -453,6 +465,17 @@ bool ImageViewer::saveFile(const QString &fileName)
         }
      const QString message = tr("Wrote \"%1\"").arg(QDir::toNativeSeparators(fileName));
      statusBar()->showMessage(message);
+     // Set Save path to previously used location
+     if(SETTINGS->getPreviouslyOpenedSave() == true)
+     {
+         QDir d = QFileInfo(fileName).absoluteDir();
+         SETTINGS->setSaveFolder(d.absolutePath());
+     }
+     else
+     {
+         SETTINGS->addRecentFile(fileName);
+         updateRecentFilesMenu();
+     }
      return true;
 }
 
