@@ -49,7 +49,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string notr="true">TextLabel</string>
       </property>
      </widget>
     </widget>
@@ -281,7 +281,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="ressources.qrc">
      <normaloff>:/images/images/fit.png</normaloff>:/images/images/fit.png</iconset>
    </property>
    <property name="text">
@@ -345,7 +345,7 @@
   </action>
   <action name="action_Dark_Mood">
    <property name="icon">
-    <iconset>
+    <iconset resource="ressources.qrc">
      <normaloff>:/images/images/pixmaps/logo.svg</normaloff>:/images/images/pixmaps/logo.svg</iconset>
    </property>
    <property name="text">
@@ -354,7 +354,7 @@
   </action>
   <action name="actionGerman">
    <property name="icon">
-    <iconset>
+    <iconset resource="ressources.qrc">
      <normaloff>:/images/images/de.png</normaloff>:/images/images/de.png</iconset>
    </property>
    <property name="text">
@@ -363,7 +363,7 @@
   </action>
   <action name="actionEnglish">
    <property name="icon">
-    <iconset>
+    <iconset resource="ressources.qrc">
      <normaloff>:/images/images/en.png</normaloff>:/images/images/en.png</iconset>
    </property>
    <property name="text">

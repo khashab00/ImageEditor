@@ -62,9 +62,8 @@
         <translation>Image Viewer</translation>
     </message>
     <message>
-        <location filename="../imageviewer.ui" line="52"/>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation type="vanished">TextLabel</translation>
     </message>
     <message>
         <location filename="../imageviewer.ui" line="69"/>
