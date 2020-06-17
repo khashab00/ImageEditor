@@ -39,7 +39,6 @@ ImageViewer::ImageViewer(QWidget *parent)
       connect(dlg,&Dialog::accepted, this,&ImageViewer::acceptChanges);
       connect(dlg,&Dialog::rgbChanged, this,   &ImageViewer::applyRGB);
       connect(dlg,&Dialog::yuvChanged, this,   &ImageViewer::applyYUV);
-
       setCentralWidget(scrollArea);
 
     setAcceptDrops(true);
@@ -483,7 +482,7 @@ void ImageViewer::dropEvent(QDropEvent *event)
 
 void ImageViewer::wheelEvent(QWheelEvent *event)
 {
-    changeFotoTest();
+    //   changeFotoTest();
 
        int numDegrees = event->angleDelta() .y();
 

@@ -92,11 +92,46 @@ void Dialog::on_YUVradioButton_clicked()
 
 void Dialog::on_pushButton_clicked()
 {
-
+    isPreview=true;
+    if(isRGBActive)
+         rgbChanged(ui->R->value(), ui->G->value(),ui->B->value());
+    else
+         yuvChanged(ui->Y->value(),ui->U->value(),ui->V->value());
 }
 
 
 void Dialog::on_R_actionTriggered(int action)
 {
-    rgbChanged(action,ui->G->value(),ui->B->value());
+    if(isPreview)
+        rgbChanged(action,ui->G->value(),ui->B->value());
+}
+
+void Dialog::on_G_actionTriggered(int action)
+{
+    if(isPreview)
+        rgbChanged(ui->R->value(),action,ui->B->value());
+}
+
+void Dialog::on_B_actionTriggered(int action)
+{
+    if(isPreview)
+        rgbChanged(ui->R->value(), ui->G->value(),action);
+}
+
+void Dialog::on_Y_actionTriggered(int action)
+{
+    if(isPreview)
+        yuvChanged(action,ui->U->value(),ui->V->value());
+}
+
+void Dialog::on_U_actionTriggered(int action)
+{
+    if(isPreview)
+        yuvChanged(ui->Y->value(),action,ui->V->value());
+}
+
+void Dialog::on_V_actionTriggered(int action)
+{
+    if(isPreview)
+        yuvChanged(ui->Y->value(),ui->U->value(),action);
 }

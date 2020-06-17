@@ -14,14 +14,16 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
-
+    int r,g,b;
+    int getR(){return r;}
     void sliderActivation(bool isRGBActive);
 
     bool getIsRGBActive() const;
     void setIsRGBActive(bool value);
 
-Q_SIGNALS:
-    void rgbChanged(float r, float g,float b);
+
+signals:
+    void rgbChanged(float , float ,float );
     void yuvChanged(float Y, float U,float V);
 
 private slots:
@@ -33,9 +35,21 @@ private slots:
 
     void on_R_actionTriggered(int action);
 
+    void on_G_actionTriggered(int action);
+
+    void on_B_actionTriggered(int action);
+
+    void on_Y_actionTriggered(int action);
+
+    void on_U_actionTriggered(int action);
+
+    void on_V_actionTriggered(int action);
+
 private:
     Ui::Dialog *ui;
     bool isRGBActive;
+    bool isPreview=false;
+
 };
 
 #endif // DIALOG_H
