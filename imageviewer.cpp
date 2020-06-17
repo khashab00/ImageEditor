@@ -2,6 +2,8 @@
 #include "ui_imageviewer.h"
 #include "Settings.h"
 #include <QSettings>
+#include <QQuickStyle>
+#include <QQmlApplicationEngine>
 namespace
 {
     const QString UNTITLED_TAB_NAME = QObject::tr("Untitled");
@@ -945,3 +947,37 @@ void ImageViewer::on_action_New_triggered()
 //{
 //    this->isModified = modified;
 //}
+
+void ImageViewer::on_action_Dark_Mood_triggered()
+{
+    if(isDarkmood == false)
+    {
+        QFile f(":qdarkstyle/style.qss");
+
+        if (!f.exists())   {
+            printf("Unable to set stylesheet, file not found\n");
+        }
+        else   {
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+        }
+       isDarkmood = true;
+       ui->menu_View->actions().last()->setText("Normal Mood");
+       ui->menu_View->actions().last()->setIcon(QIcon(":/images/images/Solid_gray.png"));
+       return;
+    }
+    else
+    {
+        isDarkmood = false;
+        ui->menu_View->actions().last()->setText("Dark Mood");
+        ui->menu_View->actions().last()->setIcon(QIcon(":/images/images/pixmaps/logo.svg"));
+        QQuickStyle::setStyle("Default");
+        QQuickStyle::setFallbackStyle("Material");
+        qApp->setStyleSheet("Material");
+        QQmlApplicationEngine engine;
+        engine.load(QUrl("qrc:/main.qml"));
+        return;
+
+    }
+}

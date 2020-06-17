@@ -75,6 +75,8 @@ private slots:
 
     void on_action_New_triggered();
 
+    void on_action_Dark_Mood_triggered();
+
 signals:
     bool isModified();
 
@@ -146,6 +148,7 @@ private:
     QTranslator m_tranlatorQt;
     QString m_currLang;
     QString m_langPath;
+    bool isDarkmood=false;
 
 
 #if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
