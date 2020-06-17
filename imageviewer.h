@@ -126,7 +126,8 @@ private:
 
 
     void loadLanguage(const QString& rLanguage);
-
+    void createLanguageMenu(void);
+    void changeEvent(QEvent* event);
 
 
     void createKeyboardShortcuts();

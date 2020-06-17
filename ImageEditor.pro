@@ -31,9 +31,7 @@ HEADERS += \
 FORMS += \
     dialog.ui \
     imageviewer.ui
-TRANSLATIONS += \
-    languages/ImageEditor_de.ts \
-    languages/ImageEditor_en.ts
+TRANSLATIONS = languages/ImageEditor_en.ts  languages/ImageEditor_de.ts
 
 
 # Default rules for deployment.

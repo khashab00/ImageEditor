@@ -56,6 +56,7 @@ ImageViewer::ImageViewer(QWidget *parent)
 
    // Update recents
    updateRecentFilesMenu();
+   createLanguageMenu();
 
 }
 
@@ -982,8 +983,9 @@ void ImageViewer::loadLanguage(const QString& rLanguage)
 {
     QLocale locale = QLocale(rLanguage);
     QLocale::setDefault(locale);
+    qApp->removeTranslator(&m_translator);
     QString languageName = QLocale::languageToString(locale.language());
-
+    QString path = QApplication::applicationDirPath();
     QString filename = QString("ImageEditor_%1.qm").arg(rLanguage);
     qApp->removeTranslator(&m_translator);
     if (m_translator.load(filename))
@@ -992,15 +994,72 @@ void ImageViewer::loadLanguage(const QString& rLanguage)
     filename = QString("qt_%1.qm").arg(rLanguage);
     qApp->removeTranslator(&m_translator);
     if(m_translatorQt.load(filename))
-            qApp->installTranslator(&m_translatorQt);
+        qApp->installTranslator(&m_translatorQt);
 }
 
 void ImageViewer::on_actionGerman_triggered()
 {
         loadLanguage("de");
+        ui->actionEnglish->setChecked(false);
+        ui->actionGerman->setChecked(true);
 }
 
 void ImageViewer::on_actionEnglish_triggered()
 {
         loadLanguage("en");
+        ui->actionEnglish->setChecked(true);
+        ui->actionGerman->setChecked(false);
+}
+
+void ImageViewer::createLanguageMenu(void)
+{
+    // format systems language
+     QString defaultLocale = QLocale::system().name(); // e.g. "de_DE"
+     defaultLocale.truncate(defaultLocale.lastIndexOf('_')); // e.g. "de"
+
+     m_langPath = QApplication::applicationDirPath();
+     m_langPath.append("/languages");
+     QDir dir(m_langPath);
+     QStringList fileNames = dir.entryList(QStringList("ImageEditor_*.qm"));
+     for (int i = 0; i < fileNames.size(); ++i) {
+      // get locale extracted by filename
+      QString locale;
+      locale = fileNames[i]; // "TranslationExample_de.qm"
+      locale.truncate(locale.lastIndexOf('.')); // "TranslationExample_de"
+      locale.remove(0, locale.indexOf('_') + 1); // "de"
+
+     QString lang = QLocale::languageToString(QLocale(locale).language());
+     QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+
+      QAction *action = new QAction(ico, lang, this);
+      action->setCheckable(true);
+      action->setData(locale);
+     // set default translators and language checked
+      if (defaultLocale == locale)
+      {
+          action->setChecked(true);
+      }
+    }
+}
+
+void ImageViewer::changeEvent(QEvent* event)
+{
+ if(0 != event) {
+  switch(event->type()) {
+   // this event is send if a translator is loaded
+   case QEvent::LanguageChange:
+    ui->retranslateUi(this);
+    break;
+
+   // this event is send, if the system, language changes
+   case QEvent::LocaleChange:
+   {
+    QString locale = QLocale::system().name();
+    locale.truncate(locale.lastIndexOf('_'));
+    loadLanguage(locale);
+   }
+   break;
+  }
+ }
+ QMainWindow::changeEvent(event);
 }

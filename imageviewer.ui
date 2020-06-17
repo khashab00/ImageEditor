@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
-    <height>360</height>
+    <width>569</width>
+    <height>363</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>552</width>
+     <width>569</width>
      <height>21</height>
     </rect>
    </property>
@@ -346,7 +346,7 @@
   <action name="action_Dark_Mood">
    <property name="icon">
     <iconset>
-     <normaloff>:/images/images/pixmaps/logo.svg</normaloff>:/images/images/pixmaps/logo.svg</iconset>
+     <normaloff>images/pixmaps/logo.svg</normaloff>images/pixmaps/logo.svg</iconset>
    </property>
    <property name="text">
     <string>Dark Mood</string>
