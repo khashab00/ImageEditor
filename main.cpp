@@ -7,9 +7,15 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator translator;
-       // look up e.g. :/languages/ImageEditor_de.qm
-    if (translator.load(QLocale(), QLatin1String("ImageEditor"), QLatin1String("_"), QLatin1String(":/languages")))
-           a.installTranslator(&translator);
+    QString locale = QLocale::system().name();
+    locale.truncate(locale.lastIndexOf('_'));
+    QLocale::setDefault(locale);
+    QString path = QApplication::applicationDirPath();
+    QString filename = QString("/ImageEditor_%1.qm").arg(locale);
+    a.removeTranslator(&translator);
+    if (translator.load(path+filename))
+         a.installTranslator(&translator);
+
     QCoreApplication::setOrganizationName("Aazrak");
     QCoreApplication::setOrganizationDomain("Aazrak.com");
     QCoreApplication::setApplicationName("ImageEditor");
