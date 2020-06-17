@@ -103,35 +103,35 @@ void Dialog::on_pushButton_clicked()
 void Dialog::on_R_actionTriggered(int action)
 {
     if(isPreview)
-        rgbChanged(action,ui->G->value(),ui->B->value());
+        rgbChanged(action,1,1);
 }
 
 void Dialog::on_G_actionTriggered(int action)
 {
     if(isPreview)
-        rgbChanged(ui->R->value(),action,ui->B->value());
+        rgbChanged(1,action,1);
 }
 
 void Dialog::on_B_actionTriggered(int action)
 {
     if(isPreview)
-        rgbChanged(ui->R->value(), ui->G->value(),action);
+        rgbChanged(1,1,action);
 }
 
 void Dialog::on_Y_actionTriggered(int action)
 {
     if(isPreview)
-        yuvChanged(action,ui->U->value(),ui->V->value());
+        yuvChanged(action,1,1);
 }
 
 void Dialog::on_U_actionTriggered(int action)
 {
     if(isPreview)
-        yuvChanged(ui->Y->value(),action,ui->V->value());
+        yuvChanged(1,action,1);
 }
 
 void Dialog::on_V_actionTriggered(int action)
 {
     if(isPreview)
-        yuvChanged(ui->Y->value(),ui->U->value(),action);
+        yuvChanged(1,1,action);
 }
