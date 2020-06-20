@@ -83,8 +83,7 @@ private slots:
 
     void on_actionEnglish_triggered();
 
-signals:
-   //    bool isModified();
+    void setModified(bool modified);
 
 private:
     void updateActions();
@@ -92,7 +91,7 @@ private:
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
     bool saveFile(const QString &fileName);
-    void setModified(bool modified);
+
     // for drag and drop implementation
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
@@ -149,6 +148,7 @@ private:
 
     QString FileName;
     bool isModified;
+
     // language stuff
     QTranslator m_translator;
     QTranslator m_translatorQt;
