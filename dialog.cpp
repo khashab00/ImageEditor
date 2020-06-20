@@ -92,7 +92,7 @@ void Dialog::on_YUVradioButton_clicked()
 
 void Dialog::on_pushButton_clicked()
 {
-    isPreview=true;
+    isPreview = true;
     if(isRGBActive)
          rgbChanged(ui->R->value(), ui->G->value(),ui->B->value());
     else

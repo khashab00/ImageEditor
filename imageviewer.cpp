@@ -41,6 +41,9 @@ ImageViewer::ImageViewer(QWidget *parent)
       connect(dlg,&Dialog::accepted, this,&ImageViewer::acceptChanges);
       connect(dlg,&Dialog::rgbChanged, this,   &ImageViewer::applyRGB);
       connect(dlg,&Dialog::yuvChanged, this,   &ImageViewer::applyYUV);
+
+      connect(imageLabel,SIGNAL(modificationChanged(bool)),this,SLOT(setModified(bool)));
+
       setCentralWidget(scrollArea);
 
     setAcceptDrops(true);
@@ -517,13 +520,6 @@ void ImageViewer::mouseReleaseEvent(QMouseEvent *event)
 }
 
 ////////////////////////////////////////////////////////////////////////
-/*bool ImageViewer::isModified()
-{
-    // Todo
-    return true;
-}*/
-
-//////////////////////////////////////////////////////////////////////
 
 void ImageViewer::setImage(const QImage &newImage)
 {
@@ -927,17 +923,16 @@ void ImageViewer::on_action_Exit_triggered()
 
 void ImageViewer::on_action_New_triggered()
 {
-/*    if(!isModified())
+    if(!isModified)
     {
-        return;
-        statusBar()->showMessage(tr("Save Your file"));
-    }
-    */
     imageLabel->clear();
     imageLabel->setBackgroundRole(QPalette::Dark);
     image = QImage();
     updateActions();
     statusBar()->showMessage(tr("Open new file"));
+    }
+
+
 }
 
 void ImageViewer::setModified(bool modified)
