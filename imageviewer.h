@@ -30,6 +30,7 @@ class ImageViewer : public QMainWindow
 public:
     ImageViewer(QWidget *parent = nullptr);
     bool loadFile(const QString &);
+    bool maybeSave();
 
 public slots:
     void applyYUV(float Y, float U,float V);
@@ -146,7 +147,8 @@ private:
 
     Dialog *dlg = new Dialog();
 
-    QString FileName;
+    QString FileName = "";
+
     bool isModified;
 
     // language stuff
