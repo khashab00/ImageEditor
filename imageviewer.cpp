@@ -42,8 +42,6 @@ ImageViewer::ImageViewer(QWidget *parent)
       connect(dlg,&Dialog::rgbChanged, this,   &ImageViewer::applyRGB);
       connect(dlg,&Dialog::yuvChanged, this,   &ImageViewer::applyYUV);
 
-      connect(imageLabel,SIGNAL(modificationChanged(bool)),this,SLOT(setModified(bool)));
-
       setCentralWidget(scrollArea);
 
     setAcceptDrops(true);
@@ -118,7 +116,9 @@ bool ImageViewer::loadFile(const QString &fileName)
 
             QFileInfo windowTitle(fileName);
 
-            setWindowTitle(tr("%1").arg(windowTitle.fileName()));
+            FileName = windowTitle.fileName();
+
+            setWindowTitle(tr("%1").arg(FileName));
 
             const QString message = tr("Opened \"%1\", %2x%3, Depth: %4").arg(QDir::
                                       toNativeSeparators(fileName)).
@@ -132,6 +132,29 @@ bool ImageViewer::loadFile(const QString &fileName)
         }
     }
     return false;
+}
+
+bool ImageViewer::maybeSave()
+{
+   if(this->isModified)
+   {
+       auto ret = QMessageBox::warning(
+                this,
+                "Editor",
+                "The file was modified, do u want to save it?",
+                QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel
+                );
+                if(ret == QMessageBox::Save){
+                    on_action_Save_triggered();
+                    isModified = false;
+                }else if(ret == QMessageBox::Discard){
+                    isModified = false;
+                    return true;
+                }else{//QMessageBox::Cancel
+                    return false;
+                }
+        }
+        return true;
 }
 
 
@@ -277,16 +300,21 @@ void ImageViewer::acceptChanges()
 {
     image = imagePreview  ;
     imageLabel->setPixmap(QPixmap::fromImage(image));
+    isModified = true;
+    setWindowTitle(tr("%1*").arg(windowTitle()));
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Open_triggered()
 {
+   if(maybeSave())
+   {
     QFileDialog dialog(this, tr("Open File"));
     initializeImageFileDialog(dialog, QFileDialog::AcceptOpen);
     while (dialog.exec() ==
-           QDialog::Accepted && !loadFile(dialog.selectedFiles().first())) {
+           QDialog::Accepted && !loadFile(dialog.selectedFiles().first()))
+    {
         FileName = dialog.selectedFiles()[0];
         if(dialog.selectedFiles().length()>0)
         {
@@ -303,6 +331,12 @@ void ImageViewer::on_action_Open_triggered()
         }
 
     }
+   }
+   else
+   {
+       const QString message = tr("Please save the file before You open a new one ;)");
+       statusBar()->showMessage(message);
+   }
 }
 
 bool ImageViewer::fileTypeSupported(QList<QByteArray> formats, QString ext)
@@ -634,20 +668,40 @@ void ImageViewer::on_action_Fit_to_Window_triggered()
 
 void ImageViewer::on_action_Save_triggered()
 {
-    //TODO save
     if (!image.isNull())
     {
-        saveContent();
+        if(isModified)
+        {
+            saveContent();
+            setWindowTitle(tr("%1").arg(FileName));
+            isModified = false;
+        }
+        else
+        {
+            const QString message = tr("There is no change to save :(");
+            statusBar()->showMessage(message);
+        }
+
     }
 }
-
 /////////////////////////////////////////////////////////////////////
 
 void ImageViewer::on_action_Save_as_triggered()
 {
-    QFileDialog dialog(this, tr("Save File As"));
-    initializeImageFileDialog(dialog, QFileDialog::AcceptSave);
-    while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
+    if(isModified)
+    {
+        QFileDialog dialog(this, tr("Save File As"));
+        initializeImageFileDialog(dialog, QFileDialog::AcceptSave);
+        while (dialog.exec() == QDialog::Accepted && !saveFile(dialog.selectedFiles().first())) {}
+        setWindowTitle(tr("%1").arg(FileName));
+        isModified = false;
+    }
+    else
+    {
+        const QString message = tr("There is no change to save :(");
+        statusBar()->showMessage(message);
+    }
+
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -881,14 +935,16 @@ void ImageViewer::saveGeometryState(QCloseEvent *event)
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::closeEvent(QCloseEvent *event)
 {
-    if (!handleCloseTabs())
+    if(maybeSave() && !handleCloseTabs())
     {
-        saveGeometryState(event);
+       saveGeometryState(event);
+       event->accept();
     }
     else
     {
         event->ignore();
     }
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -900,7 +956,6 @@ void ImageViewer::on_actionQuit_triggered()
         // add dealog to save changes
         qApp->quit();
     }
-
 }
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::on_actionClose_triggered()
@@ -915,7 +970,16 @@ void ImageViewer::on_actionClose_all_triggered()
 //////////////////////////////////////////////////////////////////////
 void ImageViewer::on_action_Exit_triggered()
 {
-    on_actionQuit_triggered();
+    if(maybeSave())
+    {
+        on_actionQuit_triggered();
+    }
+    else
+    {
+        const QString message = tr("Please save the file before You close it :(");
+        statusBar()->showMessage(message);
+    }
+
 }
 
 
@@ -923,13 +987,18 @@ void ImageViewer::on_action_Exit_triggered()
 
 void ImageViewer::on_action_New_triggered()
 {
-    if(!isModified)
+    if(maybeSave())
     {
     imageLabel->clear();
     imageLabel->setBackgroundRole(QPalette::Dark);
     image = QImage();
     updateActions();
     statusBar()->showMessage(tr("Open new file"));
+    }
+    else
+    {
+        const QString message = tr("Please save the file before You open a new document :)");
+        statusBar()->showMessage(message);
     }
 
 
