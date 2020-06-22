@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     if (translator.load(path+filename))
          a.installTranslator(&translator);
 
-    QCoreApplication::setOrganizationName("Aazrak");
-    QCoreApplication::setOrganizationDomain("Aazrak.com");
+    QCoreApplication::setOrganizationName("Hamzih");
+    QCoreApplication::setOrganizationDomain("Hamzih.com");
     QCoreApplication::setApplicationName("ImageEditor");
     a.setWindowIcon(QIcon("images/pixmaps/logo.ico"));
     ImageViewer w;

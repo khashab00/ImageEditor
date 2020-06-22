@@ -149,6 +149,7 @@ bool ImageViewer::maybeSave()
                     isModified = false;
                 }else if(ret == QMessageBox::Discard){
                     isModified = false;
+                    setWindowTitle(tr("%1").arg(FileName));
                     return true;
                 }else{//QMessageBox::Cancel
                     return false;
@@ -245,17 +246,17 @@ void ImageViewer::applyYUV(float Y, float U,float V)
             int G = qGreen(rgb);
             int B = qBlue(rgb);
 
-            int currY =  0.299    * R +  0.587    * G +  0.114      * B;
-            int currU = -0.168736 * R + -0.331264 * G +  0.5        * B;
-            int currV =  0.5      * R + -0.418688 * G + -0.081312   * B;
+            float currY =  0.299    * R +  0.587    * G +  0.114      * B;
+            float currU = 0.493 * (B-currY); //-0.168736 * R + -0.331264 * G +  0.5        * B;
+            float currV =0.877 * (R-currY); //  0.5      * R + -0.418688 * G + -0.081312   * B;
 
-            float newY = Y * currY;
-            float newU = U * currU;
-            float newV = V * currV;
+            float newY = Y/100 * currY;
+            float newU = U/100 * currU;
+            float newV = V/100 * currV;
 
-              int newR = clip(newY                      + 1.402 * newV);
-              int newG = clip(newY + -0.344 *newU * -0.714      * newV);
-              int newB = clip(newY + 1.772 * newU                     );
+              int newR = clip( newY + (1/0.877) * newV ); //newY                      + 1.402 * newV);
+              int newG = clip( newY - 0.394 * newU - 0.581 * newV); //newY + -0.344 *newU * -0.714      * newV);
+              int newB = clip( newY + (1/0.493)* newU);//newY + 1.772 * newU                     );
 
               imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
 
@@ -275,11 +276,10 @@ void ImageViewer::applyRGB(float r, float g,float b)
     for (int y = 0; y < image.height(); ++y) {
         for (int x = 0; x < image.width(); ++x) {
             QRgb rgb = image.pixel(x,y);
-            int newR = r * qRed(rgb);
-            int newG = g * qGreen(rgb);
-            int newB = b * qBlue(rgb);
+            int newR = (r/100) * qRed(rgb);
+            int newG = (g/100) * qGreen(rgb);
+            int newB = (b/100) * qBlue(rgb);
             imagePreview.setPixel(x,y,qRgb(newR,newG,newB));
-
         }
     }
     imageLabel->setPixmap(QPixmap::fromImage(imagePreview));
@@ -571,7 +571,7 @@ void ImageViewer::setImage(const QImage &newImage)
 //////////////////////////////////////////////////////////////////////
 
 void ImageViewer::scaleImage(double factor)
-{ 
+{
     Q_ASSERT(imageLabel->pixmap());
     scaleFactor += factor;
     qDebug()<<scaleFactor;

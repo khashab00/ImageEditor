@@ -49,6 +49,10 @@ void Dialog::sliderActivation(bool isRGBActive)
         ui->spinBox_Y->setEnabled(false);
         ui->spinBox_U->setEnabled(false);
         ui->spinBox_V->setEnabled(false);
+
+        ui->Y->setValue(100);
+        ui->U->setValue(100);
+        ui->V->setValue(100);
     }
     else
     {
@@ -67,6 +71,10 @@ void Dialog::sliderActivation(bool isRGBActive)
         ui->spinBox_Y->setEnabled(true);
         ui->spinBox_U->setEnabled(true);
         ui->spinBox_V->setEnabled(true);
+
+        ui->R->setValue(100);
+        ui->G->setValue(100);
+        ui->B->setValue(100);
     }
 }
 
@@ -92,46 +100,41 @@ void Dialog::on_YUVradioButton_clicked()
 
 void Dialog::on_pushButton_clicked()
 {
-    isPreview = true;
+   // isPreview = true;
     if(isRGBActive)
          rgbChanged(ui->R->value(), ui->G->value(),ui->B->value());
     else
          yuvChanged(ui->Y->value(),ui->U->value(),ui->V->value());
 }
 
-
-void Dialog::on_R_actionTriggered(int action)
+void Dialog::on_R_valueChanged(int action)
 {
-    if(isPreview)
-        rgbChanged(action,1,1);
+
+    rgbChanged(action,ui->G->value(),ui->B->value());
 }
 
-void Dialog::on_G_actionTriggered(int action)
+void Dialog::on_G_valueChanged(int action)
 {
-    if(isPreview)
-        rgbChanged(1,action,1);
+    rgbChanged(ui->R->value(),action,ui->B->value());
 }
 
-void Dialog::on_B_actionTriggered(int action)
+void Dialog::on_B_valueChanged(int action)
 {
-    if(isPreview)
-        rgbChanged(1,1,action);
+    rgbChanged(ui->B->value(),ui->G->value(),action);
+
 }
 
-void Dialog::on_Y_actionTriggered(int action)
+void Dialog::on_Y_valueChanged(int action)
 {
-    if(isPreview)
-        yuvChanged(action,1,1);
+    yuvChanged(action,ui->U->value(),ui->V->value());
 }
 
-void Dialog::on_U_actionTriggered(int action)
+void Dialog::on_U_valueChanged(int action)
 {
-    if(isPreview)
-        yuvChanged(1,action,1);
+    yuvChanged(ui->Y->value(),action,ui->V->value());
 }
 
-void Dialog::on_V_actionTriggered(int action)
+void Dialog::on_V_valueChanged(int action)
 {
-    if(isPreview)
-        yuvChanged(1,1,action);
+    yuvChanged(ui->Y->value(),ui->U->value(),action);
 }

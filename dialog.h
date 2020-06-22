@@ -32,7 +32,7 @@ private slots:
     void on_YUVradioButton_clicked();
 
     void on_pushButton_clicked();
-
+/*
     void on_R_actionTriggered(int action);
 
     void on_G_actionTriggered(int action);
@@ -44,6 +44,18 @@ private slots:
     void on_U_actionTriggered(int action);
 
     void on_V_actionTriggered(int action);
+*/
+    void on_R_valueChanged(int action);
+
+    void on_G_valueChanged(int action);
+
+    void on_B_valueChanged(int action);
+
+    void on_Y_valueChanged(int action);
+
+    void on_U_valueChanged(int action);
+
+    void on_V_valueChanged(int action);
 
 private:
     Ui::Dialog *ui;
